@@ -26,13 +26,13 @@
   <nav class="page-header__menu">
     <ul class="main-menu main-menu--header">
       <li>
-        <a class="main-menu__item" href="index.html">Главная</a>
+        <a class="main-menu__item" href="index.php">Главная</a>
       </li>
       <li>
-        <a class="main-menu__item" href="products.html">Товары</a>
+        <a class="main-menu__item" href="products.php">Товары</a>
       </li>
       <li>
-        <a class="main-menu__item" href="orders.html">Заказы</a>
+        <a class="main-menu__item" href="orders.php">Заказы</a>
       </li>
       <li>
         <a class="main-menu__item" href="#">Выйти</a>
@@ -105,7 +105,7 @@
           <a class="main-menu__item" href="#">Новинки</a>
         </li>
         <li>
-          <a class="main-menu__item" href="index.html">Sale</a>
+          <a class="main-menu__item" href="index.php">Sale</a>
         </li>
         <li>
           <a class="main-menu__item">Доставка</a>

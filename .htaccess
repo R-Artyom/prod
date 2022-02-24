@@ -1,0 +1,8 @@
+# Включуение модуля "mod_rewrite" в веб сервере "Apache"
+RewriteEngine On
+# Если на сервер пришёл запрос к несуществующему файлу
+RewriteCond %{REQUEST_FILENAME} !-f
+# И если запрашиваемая папка не существует
+RewriteCond %{REQUEST_FILENAME} !-d
+# Редирект всех запросов на index.php
+RewriteRule . /index.php

@@ -26,13 +26,13 @@
   <nav class="page-header__menu">
     <ul class="main-menu main-menu--header">
       <li>
-        <a class="main-menu__item" href="index.html">Главная</a>
+        <a class="main-menu__item" href="index.php">Главная</a>
       </li>
       <li>
-        <a class="main-menu__item active" href="products.html">Товары</a>
+        <a class="main-menu__item active" href="products.php">Товары</a>
       </li>
       <li>
-        <a class="main-menu__item" href="orders.html">Заказы</a>
+        <a class="main-menu__item" href="orders.php">Заказы</a>
       </li>
       <li>
         <a class="main-menu__item" href="#">Выйти</a>
@@ -42,7 +42,7 @@
 </header>
 <main class="page-products">
   <h1 class="h h--1">Товары</h1>
-  <a class="page-products__button button" href="add.html">Добавить товар</a>
+  <a class="page-products__button button" href="add.php">Добавить товар</a>
   <div class="page-products__header">
     <span class="page-products__header-field">Название товара</span>
     <span class="page-products__header-field">ID</span>
@@ -57,7 +57,7 @@
       <span class="product-item__field">2 500 руб.</span>
       <span class="product-item__field">Женщины</span>
       <span class="product-item__field">Да</span>
-      <a href="add.html" class="product-item__edit" aria-label="Редактировать"></a>
+      <a href="add.php" class="product-item__edit" aria-label="Редактировать"></a>
       <button class="product-item__delete"></button>
     </li>
   </ul>
@@ -76,10 +76,10 @@
           <a class="main-menu__item" href="#">Новинки</a>
         </li>
         <li>
-          <a class="main-menu__item" href="index.html">Sale</a>
+          <a class="main-menu__item" href="index.php">Sale</a>
         </li>
         <li>
-          <a class="main-menu__item" href="delivery.html">Доставка</a>
+          <a class="main-menu__item" href="templates/delivery.php">Доставка</a>
         </li>
       </ul>
     </nav>
