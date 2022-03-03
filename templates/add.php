@@ -9,24 +9,24 @@
 
   <meta name="theme-color" content="#393939">
 
-  <link rel="preload" href="fonts/opensans-400-normal.woff2" as="font">
-  <link rel="preload" href="fonts/roboto-400-normal.woff2" as="font">
-  <link rel="preload" href="fonts/roboto-700-normal.woff2" as="font">
+  <link rel="preload" href="../fonts/opensans-400-normal.woff2" as="font">
+  <link rel="preload" href="../fonts/roboto-400-normal.woff2" as="font">
+  <link rel="preload" href="../fonts/roboto-700-normal.woff2" as="font">
 
-  <link rel="icon" href="img/favicon.png">
-  <link rel="stylesheet" href="css/style.min.css">
+  <link rel="icon" href="../img/favicon.png">
+  <link rel="stylesheet" href="../css/style.min.css">
 
-  <script src="js/scripts.js" defer=""></script>
+  <script src="../js/scripts.js" defer=""></script>
 </head>
 <body>
 <header class="page-header">
   <a class="page-header__logo" href="#">
-    <img src="img/logo.svg" alt="Fashion">
+    <img src="../img/logo.svg" alt="Fashion">
   </a>
   <nav class="page-header__menu">
     <ul class="main-menu main-menu--header">
       <li>
-        <a class="main-menu__item" href="index.php">Главная</a>
+        <a class="main-menu__item" href="../index.php">Главная</a>
       </li>
       <li>
         <a class="main-menu__item" href="products.php">Товары</a>
@@ -94,7 +94,7 @@
 <footer class="page-footer">
   <div class="container">
     <a class="page-footer__logo" href="#">
-      <img src="img/logo--footer.svg" alt="Fashion">
+      <img src="../img/logo--footer.svg" alt="Fashion">
     </a>
     <nav class="page-footer__menu">
       <ul class="main-menu main-menu--footer">
@@ -105,7 +105,7 @@
           <a class="main-menu__item" href="#">Новинки</a>
         </li>
         <li>
-          <a class="main-menu__item" href="index.php">Sale</a>
+          <a class="main-menu__item" href="../index.php">Sale</a>
         </li>
         <li>
           <a class="main-menu__item">Доставка</a>
