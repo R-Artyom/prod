@@ -44,7 +44,7 @@ if (isCurrentUrl(PATH_CATALOG) || isCurrentUrl(PATH_CATALOG_NEW) || isCurrentUrl
     // Путь к шаблону страницы
     $pathTemplate = '/templates/delivery.php';
 // "Авторизация"
-} else if (isCurrentUrl(ACCOUNT_AUTHORIZATION)) {
+} else if (isCurrentUrl(PATH_ACCOUNT_AUTHORIZATION)) {
     // Логика страницы
     require $_SERVER['DOCUMENT_ROOT'] . '/content/authorization.php';
     // Путь к шаблону страницы

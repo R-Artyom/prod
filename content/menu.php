@@ -34,7 +34,7 @@ if (isAuthorization())
     foreach ($userGroup as $value) {
         // Администратор
         if ($value['name'] === 'administrator') {
-            $menuNavigation = $menuNavigationAdmin;
+            $menuNavigation = $menuNavigationAdministrator;
             break;
         }
         // Оператор

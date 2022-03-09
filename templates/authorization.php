@@ -42,7 +42,7 @@
 <!--</header>-->
 <main class="page-authorization">
     <h1 class="h h--1"><?=$title?></h1>
-    <form class="custom-form" action="<?=PATH_ADMIN?>" method="post">
+    <form class="custom-form" action="<?=PATH_ACCOUNT_AUTHORIZATION?>" method="post">
         <?php if (isAuthorization()): ?>
             <span id="gray">Ваш e-mail: <b><?= $_SESSION['login'] ?></b><br/><br/></span>
             <?php if (isset($flLogInSuccess) && $flLogInSuccess): ?>

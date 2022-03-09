@@ -9,28 +9,23 @@ const PATH_CATALOG_NEW = '/catalog/new/';
 const PATH_CATALOG_SALE = '/catalog/sale';
 //const PATH_CATALOG_SALE = '/products/sale/';
 // Ссылка на страницу "Список товаров"
-const PATH_PRODUCTS_LIST = '/products/list/';
+const PATH_PRODUCTS_LIST = '/admin/products/list/';
 // Ссылка на страницу "Добавление товаров"
-const PATH_PRODUCTS_ADD = '/products/add/';
+const PATH_PRODUCTS_ADD = '/admin/products/add/';
 // Ссылка на страницу "Изменение товаров"
-const PATH_PRODUCTS_CHANGES = '/products/changes/';
+const PATH_PRODUCTS_CHANGES = '/admin/products/changes/';
 // Ссылка на страницу "Список заказов"
-const PATH_ORDERS_LIST = '/orders/list/';
+const PATH_ORDERS_LIST = '/admin/orders/list/';
 // Ссылка на страницу "Оформление заказов"
-const PATH_ORDERS_MAKE = '/orders/make/';
+const PATH_ORDERS_MAKE = '/admin/orders/make/';
 // Ссылка на страницу "О доставке"
 const PATH_ORDERS_DELIVERY = '/orders/delivery/';
 // Ссылка на страницу "Успешное создание заказа"
 const PATH_ORDERS_SUCCESS = '/orders/success/';
-// Ссылка на страницу "Вход в административный раздел (Авторизация)" / "Выход
-// из административного раздела (Разавторизация)"
-const PATH_ADMIN = '/admin/';
-// Ссылка на страницу "Авторизация"
-//const PATH_AUTHORIZATION = '/authorization/';
-// Ссылка на страницу "Выход из административного раздела (Разавторизация)"
-//const PATH_LOG_OUT = '/log_out/';
+// Ссылка на страницу "Авторизация (вход в аккаунт / выход их аккауна)"
+const PATH_ACCOUNT_AUTHORIZATION = '/account/authorization/';
 
-// Меню для пользователей
+// Меню для всех незарегистрированных пользователей
 $menuNavigationUser = [
     [
         'title' => 'Главная', // Название пункта меню
@@ -54,36 +49,7 @@ $menuNavigationUser = [
     ],
     [
         'title' => 'Авторизация',
-        'path' => PATH_ADMIN,
-        'sort' => 5,
-    ],
-];
-
-// Меню для группы "administrator"
-$menuNavigationAdmin = [
-    [
-        'title' => 'Список товаров',
-        'path' => PATH_PRODUCTS_LIST,
-        'sort' => 1,
-    ],
-    [
-        'title' => 'Добавление товаров',
-        'path' => PATH_PRODUCTS_ADD,
-        'sort' => 2,
-    ],
-    [
-        'title' => 'Изменение товаров',
-        'path' => PATH_PRODUCTS_CHANGES,
-        'sort' => 3,
-    ],
-    [
-        'title' => 'Список заказов',
-        'path' => PATH_ORDERS_LIST,
-        'sort' => 4,
-    ],
-    [
-        'title' => 'Выход',
-        'path' => PATH_ADMIN,
+        'path' => PATH_ACCOUNT_AUTHORIZATION,
         'sort' => 5,
     ],
 ];
@@ -91,25 +57,46 @@ $menuNavigationAdmin = [
 // Меню для группы "operator"
 $menuNavigationOperator = [
     [
-        'title' => 'Список заказов',
+        'title' => 'Заказы',
         'path' => PATH_ORDERS_LIST,
         'sort' => 1,
     ],
     [
-        'title' => 'Выход',
-        'path' => PATH_ADMIN,
+        'title' => 'Выйти',
+        'path' => PATH_ACCOUNT_AUTHORIZATION,
         'sort' => 2,
     ],
 ];
 
-// Меню для группы "another"
-$menuNavigationAnother = [
+// Меню для группы "administrator"
+$menuNavigationAdministrator = [
     [
-        'title' => 'Выход',
-        'path' => PATH_ADMIN,
+        'title' => 'Заказы',
+        'path' => PATH_ORDERS_LIST,
         'sort' => 1,
     ],
+    [
+        'title' => 'Товары',
+        'path' => PATH_PRODUCTS_LIST,
+        'sort' => 2,
+    ],
+    [
+        'title' => 'Выйти',
+        'path' => PATH_ACCOUNT_AUTHORIZATION,
+        'sort' => 3,
+    ],
 ];
+
+// Меню для группы "another" (пользователь, не обладающий правами админимтратора
+// и оператора, но авторизированный)
+$menuNavigationAnother = [
+    [
+        'title' => 'Выйти',
+        'path' => PATH_ACCOUNT_AUTHORIZATION,
+        'sort' => 2,
+    ],
+];
+
 
 //$menuNavigation = [
 //    [

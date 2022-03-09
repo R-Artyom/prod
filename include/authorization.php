@@ -55,7 +55,7 @@ function logOutAuthorization()
     // Удаление сессионного куки в браузере
     setcookie(SESSION_NAME, '', 1, '/');
     // Перенаправление на страницу авторизации
-    header ('Location:' . PATH_ADMIN);
+    header ('Location:' . PATH_ACCOUNT_AUTHORIZATION);
     // Прерывание выполнения скрипта
     exit();
 }
