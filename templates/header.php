@@ -15,7 +15,7 @@
     <link rel="preload" href="/fonts/roboto-700-normal.woff2" as="font">
 
     <link rel="icon" href="/img/favicon.png">
-    <link rel="stylesheet" href="/css/style.min.css">
+    <link rel="stylesheet" href="/css/style.css">
 
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>

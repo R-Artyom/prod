@@ -2,7 +2,6 @@
 // Определение группы пользователя
 if (isAuthorization())
 {
-
     // Установить соединение с сервером MySQL
     $connection = connectDb();
     // Считывание названия текущей базы данных
@@ -31,21 +30,25 @@ if (isAuthorization())
 
     // Определение меню навигации в соответствии с группой
     $menuNavigation = $menuNavigationAnother;
+    $statusUser = 'Не определён';
     foreach ($userGroup as $value) {
         // Администратор
         if ($value['name'] === 'administrator') {
             $menuNavigation = $menuNavigationAdministrator;
+            $statusUser = 'Администратор';
             break;
         }
         // Оператор
         if ($value['name'] === 'operator') {
             $menuNavigation = $menuNavigationOperator;
+            $statusUser = 'Оператор';
             break;
         }
     }
 } else {
     // Обычный пользователь
     $menuNavigation = $menuNavigationUser;
+    $statusUser = 'Пользователь';
 }
 
 // Определение заголовка страницы

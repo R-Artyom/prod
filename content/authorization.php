@@ -37,7 +37,6 @@ if (isset($_POST) && isset($_POST['change_user_profile'])) {
 
 // Если массив "$_POST" непустой (пользователь ввел логин или пароль и нажал клавишу Enter или "войти")
 if (!empty($_POST)) {
-
     // Копирование логина и пароля для удобства
     $login = $_POST['login'];
     $password = $_POST['password'];
@@ -66,5 +65,9 @@ if (!empty($_POST)) {
         $_SESSION['login'] = $login;
         // Создание куки с логином пользователя, длительностью месяц (31 день)
         setcookie('login', $login, time() + TIME_OUT_LOGIN, '/');
+        // Перенаправление на страницу авторизации
+        header ('Location:' . PATH_ACCOUNT_AUTHORIZATION);
+        // Прерывание выполнения скрипта
+        exit();
     }
 }
