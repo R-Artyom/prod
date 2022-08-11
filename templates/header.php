@@ -17,9 +17,11 @@
     <link rel="icon" href="/img/favicon.png">
     <link rel="stylesheet" href="/css/style.css">
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
     <script src="/js/scripts.js" defer=""></script>
+    <script src="/js/ajax.js"></script>
+
 </head>
 <body>
 <header class="page-header">

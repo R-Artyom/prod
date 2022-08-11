@@ -1,48 +1,9 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="ru">-->
-<!--<head>-->
-<!--    <meta charset="utf-8">-->
-<!--    <title>Добавление товара</title>-->
-<!---->
-<!--    <meta name="description" content="Fashion - интернет-магазин">-->
-<!--    <meta name="keywords" content="Fashion, интернет-магазин, одежда, аксессуары">-->
-<!---->
-<!--    <meta name="theme-color" content="#393939">-->
-<!---->
-<!--    <link rel="preload" href="../fonts/opensans-400-normal.woff2" as="font">-->
-<!--    <link rel="preload" href="../fonts/roboto-400-normal.woff2" as="font">-->
-<!--    <link rel="preload" href="../fonts/roboto-700-normal.woff2" as="font">-->
-<!---->
-<!--    <link rel="icon" href="../img/favicon.png">-->
-<!--    <link rel="stylesheet" href="../css/style.min.css">-->
-<!---->
-<!--    <script src="../js/scripts.js" defer=""></script>-->
-<!--</head>-->
-<!--<body>-->
-<!--<header class="page-header">-->
-<!--    <a class="page-header__logo" href="#">-->
-<!--        <img src="../img/logo.svg" alt="Fashion">-->
-<!--    </a>-->
-<!--    <nav class="page-header__menu">-->
-<!--        <ul class="main-menu main-menu--header">-->
-<!--            <li>-->
-<!--                <a class="main-menu__item" href="../index.php">Главная</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a class="main-menu__item" href="products.php">Товары</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a class="main-menu__item" href="orders.php">Заказы</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--                <a class="main-menu__item" href="#">Выйти</a>-->
-<!--            </li>-->
-<!--        </ul>-->
-<!--    </nav>-->
-<!--</header>-->
 <main class="page-add">
-    <h1 class="h h--1">Добавление товара</h1>
-    <form class="custom-form" action="#" method="post">
+    <h1 class="h h--1"><?=$title?></h1>
+    <div id="result">
+        <!-- Вывод сообщения из ajax.php -->
+    </div>
+    <form id="formAddProduct" class="custom-form" action="<?=PATH_PRODUCTS_ADD?>" method="post">
         <fieldset class="page-add__group custom-form__group">
             <legend class="page-add__small-title custom-form__title">Данные о товаре</legend>
             <label for="product-name" class="custom-form__input-wrapper page-add__first-wrapper">
@@ -72,10 +33,10 @@
             <div class="page-add__select">
                 <select name="category" class="custom-form__select" multiple="multiple">
                     <option hidden="">Название раздела</option>
-                    <option value="female">Женщины</option>
-                    <option value="male">Мужчины</option>
-                    <option value="children">Дети</option>
-                    <option value="access">Аксессуары</option>
+                    <option value="1">Женщины</option>
+                    <option value="2">Мужчины</option>
+                    <option value="3">Дети</option>
+                    <option value="4">Аксессуары</option>
                 </select>
             </div>
             <input type="checkbox" name="new" id="new" class="custom-form__checkbox">
@@ -85,38 +46,9 @@
         </fieldset>
         <button class="button" type="submit">Добавить товар</button>
     </form>
-    <section class="shop-page__popup-end page-add__popup-end" hidden="">
+    <section id="popUpSuccess" class="shop-page__popup-end page-add__popup-end" hidden="">
         <div class="shop-page__wrapper shop-page__wrapper--popup-end">
             <h2 class="h h--1 h--icon shop-page__end-title">Товар успешно добавлен</h2>
         </div>
     </section>
 </main>
-<!--<footer class="page-footer">-->
-<!--    <div class="container">-->
-<!--        <a class="page-footer__logo" href="#">-->
-<!--            <img src="../img/logo--footer.svg" alt="Fashion">-->
-<!--        </a>-->
-<!--        <nav class="page-footer__menu">-->
-<!--            <ul class="main-menu main-menu--footer">-->
-<!--                <li>-->
-<!--                    <a class="main-menu__item" href="#">Главная</a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a class="main-menu__item" href="#">Новинки</a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a class="main-menu__item" href="../index.php">Sale</a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a class="main-menu__item">Доставка</a>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </nav>-->
-<!--        <address class="page-footer__copyright">-->
-<!--            © Все права защищены-->
-<!--        </address>-->
-<!--    </div>-->
-<!--</footer>-->
-<!---->
-<!--</body>-->
-<!--</html>-->

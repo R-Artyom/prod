@@ -81,9 +81,14 @@ $menuNavigationAdministrator = [
         'sort' => 2,
     ],
     [
+        'title' => 'Добавление товара',
+        'path' => PATH_PRODUCTS_ADD,
+        'sort' => 3,
+    ],
+    [
         'title' => 'Выйти',
         'path' => PATH_ACCOUNT_AUTHORIZATION,
-        'sort' => 3,
+        'sort' => 4,
     ],
 ];
 
