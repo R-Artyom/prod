@@ -23,8 +23,9 @@ if (isAuthorization())
 
     // Добавление результата в многомерный массив "Группы, в которые входит пользователь"
     $userGroup = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    // Закрыть соединение с сервером MySQL
-    disconnectDb($connection);
+    // Закрыть соединение с сервером MySQL (Только в том случае, если соединение
+    // больше не будет использоваться!!!)
+    //disconnectDb($connection);
 
     //var_dump($userGroup);
 
