@@ -7,13 +7,13 @@
         <fieldset class="page-add__group custom-form__group">
             <legend class="page-add__small-title custom-form__title">Данные о товаре</legend>
             <label for="product-name" class="custom-form__input-wrapper page-add__first-wrapper">
-                <input type="text" class="custom-form__input" name="product-name" id="product-name">
+                <input type="text" class="custom-form__input" name="product-name" id="product-name" required = "required">
                 <p class="custom-form__input-label">
                     Название товара
                 </p>
             </label>
             <label for="product-price" class="custom-form__input-wrapper">
-                <input type="text" class="custom-form__input" name="product-price" id="product-price">
+                <input type="text" class="custom-form__input" name="product-price" id="product-price" required = "required">
                 <p class="custom-form__input-label">
                     Цена товара
                 </p>
@@ -31,7 +31,8 @@
         <fieldset class="page-add__group custom-form__group">
             <legend class="page-add__small-title custom-form__title">Раздел</legend>
             <div class="page-add__select">
-                <select name="category" class="custom-form__select" multiple="multiple">
+                <select name="category[]" class="custom-form__select" multiple="multiple" required = "required">
+<!--                <select name="category" class="custom-form__select" size = "4" required = "required">-->
                     <option hidden="">Название раздела</option>
                     <option value="1">Женщины</option>
                     <option value="2">Мужчины</option>
