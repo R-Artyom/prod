@@ -8,11 +8,11 @@ $(function(){
     // Выбор элемента с «id="result"» (Текст сообщения)
     const message = $('#result');
 
-    // Обработчик события "Отправка формы по нажатию кнопки "Удалить выделенные""
+    // Обработчик события "Отправка формы по нажатию кнопки "Добавить товар""
     formAddProduct.submit(function(){
         $.ajax({
             method: 'POST',
-            url: '/ajax/products_add.php',
+            url: '/content/ajax/products_add.php',
             dataType: 'json',
             cache: false,
             contentType: false,
