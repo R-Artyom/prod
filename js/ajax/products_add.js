@@ -1,15 +1,15 @@
 // Обработка формы добавления товара
 // Ожидание загрузки всего документа, после чего будет выполнена анонимная функция
 $(function(){
-    // Выбор элемента с «id="formAddProduct""» (Форма)
+    // Выбор элемента с «id="formAddProduct"» (Форма)
     const formAddProduct = $('#formAddProduct');
     // Выбор элемента с «id="popUpSuccess"» (Всплывающее окно)
     const popUpSuccess = $('#popUpSuccess');
     // Выбор элемента с «id="result"» (Текст сообщения)
     const message = $('#result');
 
-    // Обработчик события "Отправка формы по нажатию кнопки "Добавить товар""
-    formAddProduct.submit(function(){
+    // Обработчик события "Отправка формы по нажатию кнопки "Добавить товар"
+    formAddProduct.submit(function() {
         $.ajax({
             method: 'POST',
             url: '/content/ajax/products_add.php',
@@ -18,7 +18,7 @@ $(function(){
             contentType: false,
             processData: false,
             data: new FormData(this),
-            success: function(dataJson){
+            success: function(dataJson) {
                 // Вывод сообщения из ajax.php
                 message.html(dataJson);
                 // Если данные из формы записались в базу успешно
@@ -36,7 +36,7 @@ $(function(){
                     message.html('Введите корректные данные!!!');
                 }
             },
-            error: function(){
+            error: function() {
                 // Вывод сообщения
                 message.html('Необходимо заполнить все обязательные поля');
             }

@@ -9,8 +9,8 @@
             <span class="page-products__header-field">Категория</span>
             <span class="page-products__header-field">Новинка</span>
         </div>
-        <?php foreach ($products as $value): ?>
-            <ul class="page-products__list">
+        <ul class="page-products__list">
+            <?php foreach ($products as $value): ?>
                 <li class="product-item page-products__item">
                     <b class="product-item__name"><?= $value['name']?></b>
                     <span class="product-item__field"><?= $value['id']?></span>
@@ -18,10 +18,10 @@
                     <span class="product-item__field"><?= $value['category']?></span>
                     <span class="product-item__field"><?= $value['new'] ? 'Да' : ''?></span>
                     <a href="add.php" class="product-item__edit" aria-label="Редактировать"></a>
-                    <button class="product-item__delete"></button>
+                    <button value = <?= $value['id']?> class="product-item__delete"></button>
                 </li>
-            </ul>
-        <?php endforeach ?>
+            <?php endforeach ?>
+        </ul>
     <?php else: ?>
         <div>
             Для просмотра списка товаров необходимо добавить хотя бы один товар

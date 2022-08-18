@@ -298,9 +298,20 @@ if (productsList) {
     const target = evt.target;
 
     if (target.classList && target.classList.contains('product-item__delete')) {
-
-      productsList.removeChild(target.parentElement);
-
+      const id = target.value;
+      $.ajax({
+        url: '/content/ajax/products.php',
+        method: 'GET',
+        dataType: 'json',
+        cache: false,
+        data: {idProduct: id},
+        success: function(dataJson) {
+          // Если данные из базы удалились успешно
+          if (dataJson === true) {
+            productsList.removeChild(target.parentElement);
+          }
+        }
+      });
     }
 
   });
