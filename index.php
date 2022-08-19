@@ -34,7 +34,7 @@ if (isCurrentUrl(PATH_CATALOG) || isCurrentUrl(PATH_CATALOG_NEW) || isCurrentUrl
 // "Добавление товара"
 } else if (isCurrentUrl(PATH_PRODUCTS_ADD)) {
     // Логика страницы
-    require $_SERVER['DOCUMENT_ROOT'] . '/content/add.php';
+    require $_SERVER['DOCUMENT_ROOT'] . '/content/products_add.php';
     // Путь к шаблону страницы
     $pathTemplate = '/templates/products_add.php';
 // "О доставке"
