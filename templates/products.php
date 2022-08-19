@@ -17,7 +17,7 @@
                     <span class="product-item__field"><?= $value['price']?> руб.</span>
                     <span class="product-item__field"><?= $value['category']?></span>
                     <span class="product-item__field"><?= $value['new'] ? 'Да' : ''?></span>
-                    <a href="add.php" class="product-item__edit" aria-label="Редактировать"></a>
+                    <a href="<?=PATH_PRODUCTS_ADD . '?id=' . $value['id']?>" class="product-item__edit" aria-label="Редактировать"></a>
                     <button value = <?= $value['id']?> class="product-item__delete"></button>
                 </li>
             <?php endforeach ?>

@@ -247,11 +247,13 @@ if (addList) {
 
   const addButton = addList.querySelector('.add-list__item--add');
   const addInput = addList.querySelector('#product-photo');
+  const oldPhoto = document.querySelector('#product-photo-old');
 
   checkList(addList, addButton);
 
   addInput.addEventListener('change', evt => {
 
+    oldPhoto.hidden = true;
     const template = document.createElement('LI');
     const img = document.createElement('IMG');
 
