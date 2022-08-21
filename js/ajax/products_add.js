@@ -33,12 +33,12 @@ $(function(){
                     //popupEnd.hidden = false;
                 }
                 else {
-                    message.html('Введите корректные данные!!!');
+                    message.html(dataJson);
                 }
             },
             error: function() {
                 // Вывод сообщения
-                message.html('Необходимо заполнить все обязательные поля');
+                message.html('Ошибка при добавлении/изменении товара');
             }
         });
         return false;

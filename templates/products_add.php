@@ -1,8 +1,5 @@
 <main class="page-add">
     <h1 class="h h--1"><?=$title?></h1>
-    <div id="result">
-        <!-- Вывод сообщения из ajax.php -->
-    </div>
     <form id="formAddProduct" class="custom-form" action="<?=PATH_PRODUCTS_ADD?>" method="post">
         <?php if (isset($product)): ?>
             <input type="text" name="product-id" value="<?=$product['id']?>" hidden="hidden">
@@ -54,7 +51,10 @@
             <input type="checkbox" name="sale" id="sale" class="custom-form__checkbox" <?=isset($product['sale']) && $product['sale'] == 1 ? 'checked="checked"' : ''?>>
             <label for="sale" class="custom-form__checkbox-label">Распродажа</label>
         </fieldset>
-        <button class="button" type="submit">Добавить товар</button>
+        <div id="result">
+            <!-- Вывод сообщения из ajax.php -->
+        </div>
+        <button class="button" type="submit"><?=isset($product) ? 'Сохранить изменения' : 'Добавить товар'?></button>
     </form>
     <section id="popUpSuccess" class="shop-page__popup-end page-add__popup-end" hidden="">
         <div class="shop-page__wrapper shop-page__wrapper--popup-end">

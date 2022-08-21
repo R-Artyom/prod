@@ -3,11 +3,12 @@
 require $_SERVER['DOCUMENT_ROOT'] . '/include/db.php';
 // Директория, куда будет загружаться файл изображения
 $uploadPath = $_SERVER['DOCUMENT_ROOT'] . '/img/products/';
+// TODO проверка авторизации
 
-// Если не выбрано ни одного файла
-if ($_FILES['product-photo']['error'] === UPLOAD_ERR_NO_FILE) {
+// Если не выбрано ни одного файла и это не страница "Изменение товара"
+if (($_FILES['product-photo']['error'] === UPLOAD_ERR_NO_FILE) && (!isset($_POST['product-id']))){
     // Вывести сообщение и прекратить выполнение текущего скрипта
-    exit(json_encode(false));
+    exit(json_encode("Внимание!!! Необходимо добавить фотографию товара<br/><br/>"));
 }
 // Если заполнены поля формы
 // "Название товара",
@@ -17,13 +18,31 @@ if (isset($_POST['product-name']) &&
     isset($_POST['product-price']) &&
     isset($_POST['category']))
 {
+    // Признак страницы "Изменение товара"
+    $isChangeProduct = false;
+    // Признак страницы "Добавление товара"
+    $isAddProduct = false;
+    // Признак того, что изображение продукта не надо менять (остаётся прежним)
+    $flImageNotChange = false;
+    // Формирование всех трёх признаков
+    if (isset($_POST['product-id'])) {
+        // ID изменяемого товара
+        $productId = $_POST['product-id'];
+        $isChangeProduct = true;
+        if ($_FILES['product-photo']['error'] === UPLOAD_ERR_NO_FILE) {
+            $flImageNotChange = true;
+        }
+    }
+    else {
+        $isAddProduct = true;
+    }
     // Начальное значение результата запроса базы данных - без ошибок
     $result = true;
     // Установить соединение с сервером MySQL
     $connection = connectDb();
     // Экранирование всех данных для записи в таблицу 'products'
     $name = mysqli_real_escape_string($connection, $_POST['product-name']);
-    $img_name = mysqli_real_escape_string($connection, $_FILES['product-photo']['name']);
+    $img_name = $img_name ?? '';
     $price = mysqli_real_escape_string($connection, $_POST['product-price']);
     // TODO - в БД сделать '1' или 'null'
     $new = isset($_POST['new']) // Если чекбокс "Новинка" отмечен, то 1, иначе 0
@@ -32,60 +51,60 @@ if (isset($_POST['product-name']) &&
     $sale = isset($_POST['sale']) // Если чекбокс "Распродажа" отмечен, то 1, иначе 0
         ? mysqli_real_escape_string($connection, 1)
         : mysqli_real_escape_string($connection, 0);
-    // Если это изменение старого товара
-    if (isset($_POST['product-id'])) {
-        // Новое название изображения, которое будет присвоено продукту (состоит из ID +
-        // название загружаемого файла) - теперь уникальное
-        $newNamePhoto = $_POST['product-id'] . '_' . $_FILES['product-photo']['name'];
-        // Загрузка файла в папку, если нет никаких ошибок
-        // TODO - проверить возвращаемое значение
-        move_uploaded_file($_FILES['product-photo']['tmp_name'], $uploadPath . $newNamePhoto);
-        // Обновление данных
-        mysqli_query (
-            $connection,
-            "UPDATE products SET
-            `name` = '$name',
-            `img_name` = '$newNamePhoto',
-            `price` = '$price',
-            `new` = '$new',
-            `sale` = '$sale'
-            WHERE `id` = {$_POST['product-id']}"
-        );
-    }
-    // Если это добавление нового товара
-    else {
+    // Если находимся на странице "Добавление товара"
+    if ($isAddProduct) {
         // Добавление товара в таблицу 'products'
         $result = mysqli_query (
             $connection,
             "INSERT INTO products (`name`, `img_name`, `price`, `new`, `sale`)
-        VALUES ('$name', '$img_name', '$price', '$new', '$sale')"
+            VALUES ('$name', '$img_name', '$price', '$new', '$sale')"
         );
-        // Запрос к базе данных - поиск в таблице "products" ID последней записи таблицы
-        //(т.е. ID товара, который только что был добавлен в таблицу)
+        // Запрос к базе данных - поиск в таблице "products" ID последней записи
+        // таблицы (т.е. ID товара, который только что был добавлен в таблицу)
         $resultSelect = mysqli_query(
             $connection,
             "SELECT * FROM products ORDER BY products.id DESC LIMIT 1;"
         );
         // Преобразование результата запроса в ассоциативный массив "Продукт"
         $product = mysqli_fetch_assoc($resultSelect);
-        // Новое название изображения, которое будет присвоено продукту (состоит из ID +
-        // название загружаемого файла) - теперь уникальное
-        $newNamePhoto = $product['id'] . '_' . $_FILES['product-photo']['name'];
+        // ID добавляемого товара
+        $productId = $product['id'];
+    }
+    // Если пользователь хочет добавить новое изображение на странице "Добавление
+    // товара" или на странице "Изменение товара"
+    if ($isAddProduct || !$flImageNotChange) {
+        // Определение номера позиции знака "точка" в названии файла
+        $positionPoint  = strpos($_FILES['product-photo']['name'], '.');
+        // Определение расширение файла, зная позицию знака "точка"
+        $filenameExtension = substr($_FILES['product-photo']['name'], $positionPoint);
+        // Новое уникальное название изображения, которое будет присвоено продукту
+        // (состоит из ID товара + расширение загружаемого файла)
+        $newNamePhoto = $productId . $filenameExtension;
         // Загрузка файла в папку, если нет никаких ошибок
         move_uploaded_file($_FILES['product-photo']['tmp_name'], $uploadPath . $newNamePhoto);
         // Обновление название файла изображения в таблице
         mysqli_query (
             $connection,
-            "UPDATE products SET `img_name` = '$newNamePhoto' WHERE id = {$product['id']}"
+            "UPDATE products SET `img_name` = '$newNamePhoto' WHERE id = $productId"
         );
     }
-    // Если это изменение товара, то сначала надо удалить данные по этому товару
-    // из таблицы связей
-    if (isset($_POST['product-id'])) {
-        // Удаление строк товара из таблицы 'categories_products'
+    // Если находимся на странице "Изменение товара"
+    if ($isChangeProduct) {
+        // Обновление данных
+        mysqli_query (
+            $connection,
+            "UPDATE products SET
+                `name` = '$name',
+                `price` = '$price',
+                `new` = '$new',
+                `sale` = '$sale'
+                WHERE `id` = $productId"
+        );
+        // Чтобы не было проблем надо удалить данные по этому товару из таблицы связей
+        // (всех строк товара из таблицы 'categories_products')
         $result = mysqli_query (
             $connection,
-            "DELETE FROM categories_products WHERE product_id = {$_POST['product-id']}"
+            "DELETE FROM categories_products WHERE product_id = $productId"
         );
     }
     // Добавление всех ID разделов нашего товара в базу данных
@@ -94,7 +113,6 @@ if (isset($_POST['product-name']) &&
         if ($result) {
             // Экранирование информации о каждом разделе отдельно
             $categoryId = mysqli_real_escape_string($connection, $value);
-            $productId = $_POST['product-id'] ?? $product['id'];
             // Добавление ID раздела нашего продукта в базу данных
             $result = mysqli_query (
                 $connection,

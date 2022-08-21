@@ -259,6 +259,7 @@ if (addList) {
 
     template.className = 'add-list__item add-list__item--active';
     template.addEventListener('click', evt => {
+      oldPhoto.hidden = false;
       addList.removeChild(evt.target);
       addInput.value = '';
       checkList(addList, addButton);
