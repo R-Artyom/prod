@@ -74,9 +74,22 @@ if (isset($_POST['product-name']) &&
     // товара" или на странице "Изменение товара"
     if ($isAddProduct || !$flImageNotChange) {
         // Определение номера позиции знака "точка" в названии файла
-        $positionPoint  = strpos($_FILES['product-photo']['name'], '.');
+        while (true) {
+            // Начальное смещение при поиске
+            static $offset = 0;
+            // Поиск первой точки в названии файла, начиная с $offset
+            $positionPointTmp  = mb_strpos($_FILES['product-photo']['name'], '.', $offset);
+            // Если ни одной точки больше не найдено
+            if ($positionPointTmp === false) {
+                break;
+            } else {
+                $positionPoint = $positionPointTmp;
+                // Менем смещение, для поиска следующей точки в названии
+                $offset = $positionPoint + 1;
+            }
+        }
         // Определение расширение файла, зная позицию знака "точка"
-        $filenameExtension = substr($_FILES['product-photo']['name'], $positionPoint);
+        $filenameExtension = mb_substr($_FILES['product-photo']['name'], $positionPoint);
         // Новое уникальное название изображения, которое будет присвоено продукту
         // (состоит из ID товара + расширение загружаемого файла)
         $newNamePhoto = $productId . $filenameExtension;
