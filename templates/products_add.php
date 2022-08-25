@@ -23,7 +23,7 @@
             <legend class="page-add__small-title custom-form__title">Фотография товара</legend>
             <div id="product-photo-old">
                 <?php if (isset($product)): ?>
-                    <img src="/img/products/<?=$product['img_name']?>"><br/><br/>
+                    <img src="/img/products/<?=$product['img_name'] . '?t=' . $timeUploadImg?>"><br/><br/>
                 <?php endif ?>
             </div>
             <ul class="add-list">
