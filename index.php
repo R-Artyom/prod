@@ -1,5 +1,7 @@
 <?php
 
+// Функция формирование массива для постраничной навигации
+require $_SERVER['DOCUMENT_ROOT'] . '/include/pagination.php';
 // Массив с описанием пунктов меню
 require $_SERVER['DOCUMENT_ROOT'] . '/include/menu_navigation.php';
 // Соединение c сервером MySQL

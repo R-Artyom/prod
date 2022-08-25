@@ -590,6 +590,24 @@ a {
   display: flex; }
   .paginator li:not(:last-child) {
     margin-right: 10px; }
+  .paginator__flip {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    line-height: 28px;
+    letter-spacing: -.5px;
+    text-align: center;
+    border-radius: 50%;
+    /*border: 1px solid #393939;*/
+    transition: all 300ms; }
+    .paginator__flip[href] {
+      /*border-color: #C2C2C2;*/
+      color: #787B7F; }
+      .paginator__flip[href]:hover, .paginator__item[href]:focus {
+        color: #fff;
+        border-color: #E45446;
+        background-color: #E45446; }
   .paginator__item {
     display: inline-block;
     width: 28px;
