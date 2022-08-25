@@ -312,6 +312,9 @@ if (productsList) {
           // Если данные из базы удалились успешно
           if (dataJson === true) {
             productsList.removeChild(target.parentElement);
+            if (productsList.childElementCount === 0) {
+              location.reload();
+            }
           }
         }
       });
