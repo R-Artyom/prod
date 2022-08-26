@@ -20,8 +20,6 @@ $pageActive = $_GET['page'] ?? 1;
 $pageActive = $pageActive < $pageCount ? $pageActive : $pageCount;
 // Смещение (для запроса к БД)
 $pageOffset = $pageLimit * ($pageActive - 1);
-// Формирование массива "Кнопки страниц", необходимого для постраничной навигции
-$pageButtons = getPageButtons($pageActive, $pageCount);
 // Запрос к базе данных - поиск в таблице "products" всех элементов, при этом
 // столбец 'category' заполняется всеми наименованиями разделов, в которые входит
 // продукт, через запятую с пробелом
@@ -33,6 +31,10 @@ $resultSelect = mysqli_query($connection,
                         LIMIT $pageLimit OFFSET $pageOffset"
 );
 // Считывание результата в массив до тех пор, пока он выдаётся
-while ($arr = mysqli_fetch_assoc($resultSelect)) {
-    $products[] = $arr;
+if ($resultSelect) {
+    while ($arr = mysqli_fetch_assoc($resultSelect)) {
+        $products[] = $arr;
+    }
+    // Формирование массива "Кнопки страниц", необходимого для постраничной навигции
+    $pageButtons = getPageButtons($pageActive, $pageCount);
 }

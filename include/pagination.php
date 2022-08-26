@@ -151,6 +151,9 @@ function getPageButtons($pageActive, $pageCount): array
     if ($pageButtons['right2']['num'] > $pageCount) {
         $pageButtons['right2']['show'] = null;
     }
+    if ($pageCount == 1) {
+        $pageButtons['active']['show'] = null;
+    }
 
     // Возврат массива
     return $pageButtons;
