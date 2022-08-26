@@ -1,73 +1,49 @@
 <?php
-///**
-// * Страница с отображением формы авторизации
-// */
-//
-//// Неправильный логин, по умолчанию не определён
-//$loginError = null;
-//// Неправильный пароль, по умолчанию не определён
-//$passwordError = null;
-//// Флаг - Авторизация прошла успешно
-//$flLogInSuccess = false;
-//// Флаг - Отобразить сообщение о неуспешной авторизации
-//$isShowErrorLogIn = false;
-//
-//// Если в массиве "$_GET" существует элемент с ключом "login" и он равен "yes".
-//// (может происходить в следующих случаях:
-//// 1.После нажатия на вкладку "Авторизация";
-//// 2.После ввода логина или пароля;
-//// 3.После ввода адресной строки "http://task.manager/?login=yes";)
-//// То разрешаем вводить пароль (выводится форма), иначе - вывод формы запрещен
-//$isShowForm = isset($_GET['login']) && $_GET['login'] === 'yes';
-//
-//// Если существует куки login
-//if (isset($_COOKIE['login'])) {
-//    // Конвертирование для отображения
-//    $convertLogin = htmlspecialchars($_COOKIE['login']);
-//}
-//
-//// Если нажата кнопка "Выйти"
-//if (isset($_POST) && isset($_POST['log_out'])) {
-//    // То необходимо разавторизировать пользователя и завершить сессию
-//    logOutAuthorization();
-//}
-//
-//// Если нажата кнопка "Сменить пользователя"
-//if (isset($_POST) && isset($_POST['change_user_profile'])) {
-//    // То необходимо удалить куку логина пользователя
-//    changeUserProfile();
-//}
-//
-//// Если массив "$_POST" непустой (пользователь ввел логин или пароль и нажал клавишу Enter или "войти")
-//if (!empty($_POST)) {
-//    // Копирование логина и пароля для удобства
-//    $login = $_POST['login'];
-//    $password = $_POST['password'];
-//    // В случае успешной авторизации переменная инициализируется значением true, иначе - NULL
-//    $flLogInSuccess = verifyUserDb($login, $password);
-//    // Если логин или пароль неправильные
-//    if (!$flLogInSuccess) {
-//        // Отобразить сообщение о неуспешной авторизации
-//        $isShowErrorLogIn = true;
-//        // Инициализация неправильного логина содержимым POST параметра
-//        $loginError = $_POST['login'];
-//        // Инициализация неправильного пароля содержимым POST параметра
-//        $passwordError = $_POST['password'];
-//    // Если авторизация пользователя прошла успешно
-//    } else {
-//        // Если сессия не запущена
-//        if (empty($_SESSION)) {
-//            // Установить имя сессии, отличающееся от имени по умолчанию
-//            session_name(SESSION_NAME);
-//            // Старт сессии
-//            session_start();
-//        }
-//        // Фиксирование времени начала сессии
-//        $_SESSION['startTime'] = time();
-//        // Признак авторизации - логин пользователя
-//        $_SESSION['login'] = $login;
-//        // Создание куки с логином пользователя, длительностью месяц (31 день)
-//        setcookie('login', $login, time() + TIME_OUT_LOGIN, '/');
-//    }
-//}
-//var_dump($_SERVER);
+// Количество записей на одной странице
+$pageLimit = 9;
+// Время загрузки изображения товара на страницу. (Будет добавляться
+// к адресу изображения в качестве GET-параметров для избежания
+// загрузки кэшированного изображения. Если этого не делать, то будет
+// отображаться старая фотография с тем же названием)
+$timeUploadImg = time();
+
+// Установить соединение с сервером MySQL
+$connection = connectDb();
+// Запрос количества записей в таблице 'products'
+$resultSelect = mysqli_query(
+    $connection,
+    "SELECT COUNT(*) FROM products;"
+);
+//Запись результата в массив
+$row = mysqli_fetch_row($resultSelect);
+// Количество товаров в списке товаров
+$productCount = $row[0];
+// Общее количество страниц
+$pageCount = ceil($productCount / $pageLimit);
+// Номер активной (текущей) страницы (если не задан - то "1", если больше
+// последней страницы - то приравнивается к последней странице)
+$pageActive = $_GET['page'] ?? 1;
+$pageActive = $pageActive < $pageCount ? $pageActive : $pageCount;
+// Смещение (для запроса к БД)
+$pageOffset = $pageLimit * ($pageActive - 1);
+// Запрос к базе данных - поиск в таблице "products" всех элементов, при этом
+// столбец 'category' заполняется всеми наименованиями разделов, в которые входит
+// продукт, через запятую с пробелом
+$resultSelect = mysqli_query($connection,
+    "SELECT p.id, p.name, p.img_name, p.price, p.new, p.sale, GROUP_CONCAT(categories.name SEPARATOR ', ') as category FROM products AS p
+        LEFT JOIN categories_products ON categories_products.product_id = p.id
+                  LEFT JOIN categories ON categories_products.category_id = categories.id
+                        GROUP BY p.id
+                        LIMIT $pageLimit OFFSET $pageOffset"
+);
+// Если есть товары, удовлетворяющие запросу
+if ($resultSelect) {
+    // Считывание результата в массив до тех пор, пока он выдаётся
+    while ($arr = mysqli_fetch_assoc($resultSelect)) {
+        $products[] = $arr;
+    }
+    // Формирование массива "Кнопки страниц", необходимого для постраничной навигции
+    $pageButtons = getPageButtons($pageActive, $pageCount);
+    // Формирование фразы "Найдено х моделей"
+    $msgProductCount = getPhraseCountModels($productCount);
+}
