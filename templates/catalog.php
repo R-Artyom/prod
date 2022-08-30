@@ -8,25 +8,15 @@
     <section class="shop container">
         <?php if (isset($products)):?>
             <section class="shop__filter filter">
-                <form>
+                <form method="get">
                     <div class="filter__wrapper">
                         <b class="filter__title">Категории</b>
                         <ul class="filter__list">
-                            <li>
-                                <a class="filter__list-item active" href="#">Все</a>
-                            </li>
-                            <li>
-                                <a class="filter__list-item" href="#">Женщины</a>
-                            </li>
-                            <li>
-                                <a class="filter__list-item" href="#">Мужчины</a>
-                            </li>
-                            <li>
-                                <a class="filter__list-item" href="#">Дети</a>
-                            </li>
-                            <li>
-                                <a class="filter__list-item" href="#">Аксессуары</a>
-                            </li>
+                            <?php foreach ($category as $key => $value): ?>
+                                <li>
+                                    <a class="<?=$value['class']?>" href="<?=$value['path']?>"><?=$value['name']?></a>
+                                </li>
+                            <?php endforeach ?>
                         </ul>
                     </div>
                     <div class="filter__wrapper">
@@ -35,8 +25,10 @@
                             <span class="range__info">Цена</span>
                             <div class="range__line" aria-label="Range Line"></div>
                             <div class="range__res">
-                                <span class="range__res-item min-price">350 руб.</span>
-                                <span class="range__res-item max-price">32 000 руб.</span>
+                                <input id="sliderMin" type="text" name="sliderMin" value = "<?=$sliderMin?>" hidden="hidden">
+                                <span class="range__res-item min-price"><?=$sliderMin?> руб.</span>
+                                <input id="sliderMax" type="text" name="sliderMax" value = "<?=$sliderMax?>" hidden="hidden">
+                                <span class="range__res-item max-price"><?=$sliderMax?> руб.</span>
                             </div>
                         </div>
                     </div>
@@ -76,7 +68,7 @@
                                 <img src="/img/products/<?=$value['img_name'] . '?t=' . $timeUploadImg?>" alt="<?=$value['name']?>">
                             </div>
                             <p class="product__name"><?=$value['name']?></p>
-                            <span class="product__price"><?=$value['price']?> руб.</span>
+                            <span class="product__price"><?=(float)$value['price']?> руб.</span>
                         </article>
                     <?php endforeach ?>
                 </section>
@@ -86,7 +78,7 @@
                             <li>
                                 <a class="<?=$value['class']?>"
                                     <?php if ($button != 'active' && $button != 'firstSep' && $button != 'lastSep'): ?>
-                                        href="<?=PATH_CATALOG . '?page=' . $value['num']?>"
+                                        href="<?=$category[$categoryActive]['path'] . '?page=' . $value['num']?>"
                                     <?php endif ?>>
                                     <?=$value['text']?>
                                 </a>

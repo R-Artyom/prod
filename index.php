@@ -16,7 +16,8 @@ require $_SERVER['DOCUMENT_ROOT'] . '/content/menu.php';
 
 // Страницы:
 // "Главная", "Новинки" или "Распродажа"
-if (isCurrentUrl(PATH_CATALOG) || isCurrentUrl(PATH_CATALOG_NEW) || isCurrentUrl(PATH_CATALOG_SALE)) {
+if (isCurrentUrl(PATH_MAIN)
+    || (strpos($_SERVER["REQUEST_URI"], PATH_CATALOG) === 0)) {
     // Логика страницы
     require $_SERVER['DOCUMENT_ROOT'] . '/content/catalog.php';
     // Путь к шаблону страницы

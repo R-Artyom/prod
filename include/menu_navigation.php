@@ -1,13 +1,24 @@
 <?php
-
-// Ссылка на страницу "Каталог(Главная)"
-const PATH_CATALOG = '/';
+// Ссылка на страницу "Главная"
+const PATH_MAIN = '/';
+// Ссылка на страницу "Каталог"
+const PATH_CATALOG = '/catalog/';
 // Ссылка на страницу "Новинки"
 const PATH_CATALOG_NEW = '/catalog/new/';
-//const PATH_CATALOG_NEW = '/products/new/';
 // Ссылка на страницу "Распродажа"
-const PATH_CATALOG_SALE = '/catalog/sale';
-//const PATH_CATALOG_SALE = '/products/sale/';
+const PATH_CATALOG_SALE = '/catalog/sale/';
+
+// Ссылка на страницу "Все категории товаров"
+const PATH_ALL = 'all/';
+// Ссылка на страницу категории товаров "Женщины"
+const PATH_WOMAN = 'woman/';
+// Ссылка на страницу категории товаров "Мужчины"
+const PATH_MAN = 'man/';
+// Ссылка на страницу категории товаров "Дети"
+const PATH_CHILDREN = 'children/';
+// Ссылка на страницу категории товаров "Аксессуары"
+const PATH_ACCESSORIES = 'accessories/';
+
 // Ссылка на страницу "Список товаров"
 const PATH_PRODUCTS_LIST = '/admin/products/list/';
 // Ссылка на страницу "Добавление товаров"
@@ -29,7 +40,7 @@ const PATH_ACCOUNT_AUTHORIZATION = '/account/authorization/';
 $menuNavigationUser = [
     [
         'title' => 'Главная', // Название пункта меню
-        'path' => PATH_CATALOG, // Ссылка на страницу, куда ведет пункт меню
+        'path' => PATH_MAIN, // Ссылка на страницу, куда ведет пункт меню
         'sort' => 1, // Индекс сортировки
     ],
     [

@@ -326,16 +326,25 @@ if (productsList) {
 
 // jquery range maxmin
 if (document.querySelector('.shop-page')) {
+  const sliderMin = parseInt($('#sliderMin').attr('value'));
+  const sliderMax = parseInt($('#sliderMax').attr('value'));
 
+  console.log(sliderMin);
+  console.log(sliderMax);
   $('.range__line').slider({
-    min: 350,
-    max: 32000,
-    values: [350, 32000],
+    min: sliderMin,
+    max: sliderMax,
+    values: [sliderMin, sliderMax],
     range: true,
+    step: 10,
     stop: function(event, ui) {
+      const min = ui.values[0];
+      const max = ui.values[1];
+      $('.min-price').text(min + ' руб.');
+      $('.max-price').text(max + ' руб.');
 
-      $('.min-price').text($('.range__line').slider('values', 0) + ' руб.');
-      $('.max-price').text($('.range__line').slider('values', 1) + ' руб.');
+      $('#sliderMin').attr('value', min);
+      $('#sliderMax').attr('value', max);
 
     },
     slide: function(event, ui) {

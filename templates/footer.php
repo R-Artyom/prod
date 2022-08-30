@@ -1,6 +1,6 @@
 <footer class="page-footer">
     <div class="container">
-        <a class="page-footer__logo" href="#">
+        <a class="page-footer__logo" href="<?=PATH_MAIN?>">
             <img src="/img/logo--footer.svg" alt="Fashion">
         </a>
         <nav class="page-footer__menu">
