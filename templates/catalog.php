@@ -9,10 +9,16 @@
         <?php if (isset($products)):?>
             <section class="shop__filter filter">
                 <form method="get">
+                    <?php if (isset($filter['sort'])):?>
+                        <input id="sort" type="text" name="sort" value="<?=$filter['sort']?>" hidden="hidden">
+                    <?php endif ?>
+                    <?php if (isset($filter['order'])):?>
+                        <input id="order" type="text" name="order" value="<?=$filter['order']?>" hidden="hidden">
+                    <?php endif ?>
                     <div class="filter__wrapper">
                         <b class="filter__title">Категории</b>
                         <ul class="filter__list">
-                            <?php foreach ($category as $key => $value): ?>
+                            <?php foreach ($category as $key => $value):?>
                                 <li>
                                     <a class="<?=$value['class']?>" href="<?=$value['path']?>"><?=$value['name']?></a>
                                 </li>
@@ -26,17 +32,17 @@
                             <div class="range__line" aria-label="Range Line"></div>
                             <div class="range__res">
                                 <input id="sliderMin" type="text" name="sliderMin" value = "<?=$sliderMin?>" hidden="hidden">
-                                <span class="range__res-item min-price"><?=$sliderMin?> руб.</span>
+                                <span class="range__res-item min-price"><?=$filter['sliderMin'] ?? $sliderMin?> руб.</span>
                                 <input id="sliderMax" type="text" name="sliderMax" value = "<?=$sliderMax?>" hidden="hidden">
-                                <span class="range__res-item max-price"><?=$sliderMax?> руб.</span>
+                                <span class="range__res-item max-price"><?=$filter['sliderMax'] ?? $sliderMax?> руб.</span>
                             </div>
                         </div>
                     </div>
 
                     <fieldset class="custom-form__group">
-                        <input type="checkbox" name="new" id="new" class="custom-form__checkbox">
+                        <input type="checkbox" name="new" id="new" class="custom-form__checkbox" <?=isset($filter['new']) ? 'checked="checked"' : ''?> <?=($pathActive === PATH_CATALOG_NEW) ? 'disabled="disabled"' : ''?>">
                         <label for="new" class="custom-form__checkbox-label custom-form__info" style="display: block;">Новинка</label>
-                        <input type="checkbox" name="sale" id="sale" class="custom-form__checkbox">
+                        <input type="checkbox" name="sale" id="sale" class="custom-form__checkbox" <?=isset($filter['sale']) ? 'checked="checked"' : ''?> <?=($pathActive === PATH_CATALOG_SALE) ? 'disabled="disabled"' : ''?>>
                         <label for="sale" class="custom-form__checkbox-label custom-form__info" style="display: block;">Распродажа</label>
                     </fieldset>
                     <button class="button" type="submit" style="width: 100%">Применить</button>
@@ -44,23 +50,37 @@
             </section>
 
             <div class="shop__wrapper">
-                <section class="shop__sorting">
-                    <div class="shop__sorting-item custom-form__select-wrapper">
-                        <select class="custom-form__select" name="category">
-                            <option hidden="">Сортировка</option>
-                            <option value="price">По цене</option>
-                            <option value="name">По названию</option>
-                        </select>
-                    </div>
-                    <div class="shop__sorting-item custom-form__select-wrapper">
-                        <select class="custom-form__select" name="prices">
-                            <option hidden="">Порядок</option>
-                            <option value="all">По возрастанию</option>
-                            <option value="woman">По убыванию</option>
-                        </select>
-                    </div>
-                    <p class="shop__sorting-res"><span class="res-sort"><?=$msgProductCount?></span></p>
-                </section>
+                <form method="get" id="formSort">
+                    <?php if (isset($filter['sliderMin'])):?>
+                        <input type="text" name="sliderMin" value="<?=$filter['sliderMin']?>" hidden="hidden">
+                    <?php endif ?>
+                    <?php if (isset($filter['sliderMax'])):?>
+                        <input type="text" name="sliderMax" value="<?=$filter['sliderMax']?>" hidden="hidden">
+                    <?php endif ?>
+                    <?php if (isset($filter['new'])):?>
+                        <input type="text" name="new" value="<?=$filter['new']?>" hidden="hidden">
+                    <?php endif ?>
+                    <?php if (isset($filter['sale'])):?>
+                        <input type="text" name="sale" value="<?=$filter['sale']?>" hidden="hidden">
+                    <?php endif ?>
+                    <section class="shop__sorting">
+                        <div class="shop__sorting-item custom-form__select-wrapper">
+                            <select class="custom-form__select" name="sort" onchange="document.getElementById('formSort').submit()">
+                                <option value="" hidden="">Сортировка</option>
+                                <option value="price" <?=$filter['sort'] === 'price'? 'selected="selected"' : ''?>>По цене</option>
+                                <option value="name" <?=$filter['sort'] === 'name'? 'selected="selected"' : ''?>>По названию</option>
+                            </select>
+                        </div>
+                        <div class="shop__sorting-item custom-form__select-wrapper">
+                            <select class="custom-form__select" name="order" onchange="document.getElementById('formSort').submit()">
+                                <option value="" hidden="">Порядок</option>
+                                <option value="asc" <?=$filter['order'] === 'asc'? 'selected="selected"' : ''?>>По возрастанию</option>
+                                <option value="desc" <?=$filter['order'] === 'desc'? 'selected="selected"' : ''?>>По убыванию</option>
+                            </select>
+                        </div>
+                        <p class="shop__sorting-res"><span class="res-sort"><?=$msgProductCount?></span></p>
+                    </section>
+                </form>
                 <section class="shop__list">
                     <?php foreach ($products as $value):?>
                         <article class="shop__item product" tabindex="0">
@@ -78,7 +98,7 @@
                             <li>
                                 <a class="<?=$value['class']?>"
                                     <?php if ($button != 'active' && $button != 'firstSep' && $button != 'lastSep'): ?>
-                                        href="<?=$category[$categoryActive]['path'] . '?page=' . $value['num']?>"
+                                        href="<?=$_SERVER["REQUEST_URI"] . $joinGet . 'page=' . $value['num']?>"
                                     <?php endif ?>>
                                     <?=$value['text']?>
                                 </a>
@@ -89,7 +109,7 @@
             </div>
         <?php else: ?>
             <div>
-                Извините, в каталоге отсутствуют товары
+                Извините, в каталоге отсутствуют товары с установленными параметрами
             </div>
         <?php endif ?>
     </section>

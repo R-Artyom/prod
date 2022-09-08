@@ -326,17 +326,21 @@ if (productsList) {
 
 // jquery range maxmin
 if (document.querySelector('.shop-page')) {
-  const sliderMin = parseInt($('#sliderMin').attr('value'));
-  const sliderMax = parseInt($('#sliderMax').attr('value'));
+  const sliderMin = parseFloat($('#sliderMin').attr('value'));
+  const sliderMax = parseFloat($('#sliderMax').attr('value'));
 
-  console.log(sliderMin);
-  console.log(sliderMax);
+  const sliderMinActive = parseFloat($('.min-price').text());
+  const sliderMaxActive = parseFloat($('.max-price').text());
+
+  $('#sliderMin').attr('value', sliderMinActive);
+  $('#sliderMax').attr('value', sliderMaxActive);
+
   $('.range__line').slider({
     min: sliderMin,
     max: sliderMax,
-    values: [sliderMin, sliderMax],
+    values: [sliderMinActive, sliderMaxActive],
     range: true,
-    step: 10,
+    step: 1,
     stop: function(event, ui) {
       const min = ui.values[0];
       const max = ui.values[1];

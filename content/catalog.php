@@ -6,6 +6,8 @@ $pageLimit = 9;
 // загрузки кэшированного изображения. Если этого не делать, то будет
 // отображаться старая фотография с тем же названием)
 $timeUploadImg = time();
+// Установить соединение с сервером MySQL
+$connection = connectDb();
 
 /**
  * Поиск активной (текущей) страницы
@@ -75,31 +77,6 @@ if (isCurrentUrl(PATH_MAIN) || isCurrentUrl($pathActive) || isCurrentUrl($pathAc
 // Для текущей категории меняется класс на активный
 $category[$categoryActive]['class'] = 'filter__list-item active';
 /**
- * Поиск количества товаров в соответствии с категорией
- */
-// Установить соединение с сервером MySQL
-$connection = connectDb();
-// Для категории "Все"
-if ($categoryActive === 'all') {
-    // Запрос количества записей
-    $resultSelect = mysqli_query($connection,
-        "SELECT COUNT(*) FROM products;"
-    );
-// Для категорий 'Женщины', 'Мужчины', 'Дети', 'Аксессуары'
-} else {
-    // Запрос количества записей
-    $resultSelect = mysqli_query($connection,
-        "SELECT COUNT(*) FROM products
-            LEFT JOIN categories_products ON categories_products.product_id = products.id
-                LEFT JOIN categories ON categories_products.category_id = categories.id
-                    WHERE categories.name IN ({$category[$categoryActive]['nameDb']});"
-    );
-}
-// Запись результата в массив
-$row = mysqli_fetch_row($resultSelect);
-// Количество товаров в списке товаров
-$productCount = $row[0];
-/**
  * Поиск минимальной цены
  */
 // Запрос количества записей в таблице 'products'
@@ -112,7 +89,8 @@ $resultSelect = mysqli_query($connection,
 // Если есть товары, удовлетворяющие запросу
 if ($resultSelect) {
     $row = mysqli_fetch_assoc($resultSelect);
-    $sliderMin = (float)$row['min'];
+    // Округление в меньшую сторону
+    $sliderMin = floor((float)$row['min']);
 }
 /**
  * Поиск максимальной цены
@@ -126,8 +104,78 @@ $resultSelect = mysqli_query($connection,
 // Если есть товары, удовлетворяющие запросу
 if ($resultSelect) {
     $row = mysqli_fetch_assoc($resultSelect);
-    $sliderMax = (float)$row['max'];
+    // Округление в большую сторону
+    $sliderMax = ceil((float)$row['max']);
 }
+/**
+ *  "Фильтры" - параметры get, добавляемые к адресу
+ */
+$filter = [
+    // Сортировка (по цене (price), названию (name))
+    'sort' => empty($_GET['sort']) ? null : $_GET['sort'],
+    // Порядок (по возрастанию (ASC), убыванию (DESC))
+    'order' => empty($_GET['order']) ? null : $_GET['order'],
+    // Минимальная цена
+    'sliderMin' => $_GET['sliderMin'] ?? null,
+    // Максимальная цена
+    'sliderMax' => $_GET['sliderMax'] ?? null,
+    // Новинки
+    'new' => isset($_GET['new']) || ($pathActive === PATH_CATALOG_NEW) ? 'new' : null,
+    // Распродажа
+    'sale' => isset($_GET['sale']) || ($pathActive === PATH_CATALOG_SALE) ? 'sale' : null,
+];
+// Преобразованный массив (для запросов базы данны
+$filterDb = [
+    // Сортировка (по цене (price), названию (name))
+    'sort' => $filter['sort'] ?? 'name',
+    // Порядок (по возрастанию (ASC), убыванию (DESC))
+    'order' => $filter['order'] ?? 'ASC',
+    // Минимальная цена
+    'sliderMin' => $filter['sliderMin'] ?? $sliderMin,
+    // Максимальная цена
+    'sliderMax' => $filter['sliderMax'] ?? $sliderMax,
+    // Новинки
+    'new' => isset($filter['new']) ? 1 : 0,
+    // Распродажа
+    'sale' => isset($filter['sale']) ? 1 : 0,
+];
+// Формирование URL-кодированной строки
+$query = http_build_query($filter);
+// Формирование символа, необходимого при добавлении get-параметра "номер страницы"
+if (strpos($_SERVER["REQUEST_URI"], '?') === false) {
+    $joinGet = '?';
+} else {
+    $joinGet = '&';
+}
+/**
+ * Поиск количества товаров в соответствии с категорией и фильтрами
+ */
+// Для категории "Все"
+if ($categoryActive === 'all') {
+    // Запрос количества записей
+    $resultSelect = mysqli_query($connection,
+        "SELECT COUNT(*) FROM products
+                    WHERE products.new >= '{$filterDb['new']}'
+                            AND products.sale >= '{$filterDb['sale']}'
+                                AND products.price BETWEEN '{$filterDb['sliderMin']}' and '{$filterDb['sliderMax']}';"
+    );
+// Для категорий 'Женщины', 'Мужчины', 'Дети', 'Аксессуары'
+} else {
+    // Запрос количества записей
+    $resultSelect = mysqli_query($connection,
+        "SELECT COUNT(*) FROM products
+            LEFT JOIN categories_products ON categories_products.product_id = products.id
+                LEFT JOIN categories ON categories_products.category_id = categories.id
+                    WHERE categories.name IN ({$category[$categoryActive]['nameDb']})
+                        AND products.new >= '{$filterDb['new']}'
+                            AND products.sale >= '{$filterDb['sale']}'
+                                AND products.price BETWEEN '{$filterDb['sliderMin']}' and '{$filterDb['sliderMax']}';"
+    );
+}
+// Запись результата в массив
+$row = mysqli_fetch_row($resultSelect);
+// Количество товаров в списке товаров
+$productCount = $row[0];
 /**
  * Поиск товаров, удовлетворяющих всем критериям
  */
@@ -146,9 +194,13 @@ $resultSelect = mysqli_query($connection,
     "SELECT p.id, p.name, p.img_name, p.price, p.new, p.sale, GROUP_CONCAT(categories.name SEPARATOR ', ') as category FROM products AS p
         LEFT JOIN categories_products ON categories_products.product_id = p.id
             LEFT JOIN categories ON categories_products.category_id = categories.id
-                WHERE categories.name IN ({$category[$categoryActive]['nameDb']})        
-                    GROUP BY p.id
-                        LIMIT $pageLimit OFFSET $pageOffset"
+                WHERE categories.name IN ({$category[$categoryActive]['nameDb']})    
+                AND p.new >= '{$filterDb['new']}'
+                AND p.sale >= '{$filterDb['sale']}'
+                AND p.price BETWEEN '{$filterDb['sliderMin']}' and '{$filterDb['sliderMax']}'
+                    GROUP BY p.id, p.{$filterDb['sort']}
+                        ORDER BY p.{$filterDb['sort']} {$filterDb['order']}
+                            LIMIT $pageLimit OFFSET $pageOffset;"
 );
 
 // Если есть товары, удовлетворяющие запросу
