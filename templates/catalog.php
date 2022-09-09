@@ -6,25 +6,25 @@
         </div>
     </header>
     <section class="shop container">
-        <?php if (isset($products)):?>
-            <section class="shop__filter filter">
-                <form method="get">
-                    <?php if (isset($filter['sort'])):?>
-                        <input id="sort" type="text" name="sort" value="<?=$filter['sort']?>" hidden="hidden">
-                    <?php endif ?>
-                    <?php if (isset($filter['order'])):?>
-                        <input id="order" type="text" name="order" value="<?=$filter['order']?>" hidden="hidden">
-                    <?php endif ?>
-                    <div class="filter__wrapper">
-                        <b class="filter__title">Категории</b>
-                        <ul class="filter__list">
-                            <?php foreach ($category as $key => $value):?>
-                                <li>
-                                    <a class="<?=$value['class']?>" href="<?=$value['path']?>"><?=$value['name']?></a>
-                                </li>
-                            <?php endforeach ?>
-                        </ul>
-                    </div>
+        <section class="shop__filter filter">
+            <form method="get">
+                <?php if (isset($filter['sort'])):?>
+                    <input id="sort" type="text" name="sort" value="<?=$filter['sort']?>" hidden="hidden">
+                <?php endif ?>
+                <?php if (isset($filter['order'])):?>
+                    <input id="order" type="text" name="order" value="<?=$filter['order']?>" hidden="hidden">
+                <?php endif ?>
+                <div class="filter__wrapper">
+                    <b class="filter__title">Категории</b>
+                    <ul class="filter__list">
+                        <?php foreach ($category as $key => $value):?>
+                            <li>
+                                <a class="<?=$value['class']?>" href="<?=$value['path']?>"><?=$value['name']?></a>
+                            </li>
+                        <?php endforeach ?>
+                    </ul>
+                </div>
+                <?php if ($sliderMin != 0 && $sliderMax != 0):?>
                     <div class="filter__wrapper">
                         <b class="filter__title">Фильтры</b>
                         <div class="filter__range range">
@@ -38,7 +38,6 @@
                             </div>
                         </div>
                     </div>
-
                     <fieldset class="custom-form__group">
                         <input type="checkbox" name="new" id="new" class="custom-form__checkbox" <?=isset($filter['new']) ? 'checked="checked"' : ''?> <?=($pathActive === PATH_CATALOG_NEW) ? 'disabled="disabled"' : ''?>">
                         <label for="new" class="custom-form__checkbox-label custom-form__info" style="display: block;">Новинка</label>
@@ -46,10 +45,13 @@
                         <label for="sale" class="custom-form__checkbox-label custom-form__info" style="display: block;">Распродажа</label>
                     </fieldset>
                     <button class="button" type="submit" style="width: 100%">Применить</button>
-                </form>
-            </section>
+                <?php endif ?>
+            </form>
 
-            <div class="shop__wrapper">
+        </section>
+
+        <div class="shop__wrapper">
+            <?php if (isset($products)):?>
                 <form method="get" id="formSort">
                     <?php if (isset($filter['sliderMin'])):?>
                         <input type="text" name="sliderMin" value="<?=$filter['sliderMin']?>" hidden="hidden">
@@ -106,12 +108,12 @@
                         <?php endif ?>
                     <?php endforeach ?>
                 </ul>
-            </div>
-        <?php else: ?>
-            <div>
-                Извините, в каталоге отсутствуют товары с установленными параметрами
-            </div>
-        <?php endif ?>
+            <?php else: ?>
+                <div>
+                    Извините, в данной категории отсутствуют товары <?=($sliderMin != 0 && $sliderMax != 0) ? 'с указанными фильтрами' : ''?>
+                </div>
+            <?php endif ?>
+        </div>
     </section>
     <section class="shop-page__order" hidden="">
         <div class="shop-page__wrapper">

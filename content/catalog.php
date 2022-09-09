@@ -79,7 +79,6 @@ $category[$categoryActive]['class'] = 'filter__list-item active';
 /**
  * Поиск минимальной цены
  */
-// Запрос количества записей в таблице 'products'
 $resultSelect = mysqli_query($connection,
     "SELECT MIN(price) as min FROM products
         LEFT JOIN categories_products ON categories_products.product_id = products.id
@@ -124,7 +123,7 @@ $filter = [
     // Распродажа
     'sale' => isset($_GET['sale']) || ($pathActive === PATH_CATALOG_SALE) ? 'sale' : null,
 ];
-// Преобразованный массив (для запросов базы данны
+// Массив с фильтрами для sql запросов
 $filterDb = [
     // Сортировка (по цене (price), названию (name))
     'sort' => $filter['sort'] ?? 'name',
