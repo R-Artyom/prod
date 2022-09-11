@@ -41,27 +41,22 @@ $menuNavigationUser = [
     [
         'title' => 'Главная', // Название пункта меню
         'path' => PATH_MAIN, // Ссылка на страницу, куда ведет пункт меню
-        'sort' => 1, // Индекс сортировки
     ],
     [
         'title' => 'Новинки',
         'path' => PATH_CATALOG_NEW,
-        'sort' => 2,
     ],
     [
         'title' => 'Распродажа',
         'path' => PATH_CATALOG_SALE,
-        'sort' => 3,
     ],
     [
         'title' => 'Доставка',
         'path' => PATH_ORDERS_DELIVERY,
-        'sort' => 4,
     ],
     [
         'title' => 'Авторизация',
         'path' => PATH_ACCOUNT_AUTHORIZATION,
-        'sort' => 5,
     ],
 ];
 
@@ -70,12 +65,10 @@ $menuNavigationOperator = [
     [
         'title' => 'Заказы',
         'path' => PATH_ORDERS_LIST,
-        'sort' => 1,
     ],
     [
         'title' => 'Выйти',
         'path' => PATH_ACCOUNT_AUTHORIZATION,
-        'sort' => 2,
     ],
 ];
 
@@ -84,22 +77,18 @@ $menuNavigationAdministrator = [
     [
         'title' => 'Заказы',
         'path' => PATH_ORDERS_LIST,
-        'sort' => 1,
     ],
     [
         'title' => 'Товары',
         'path' => PATH_PRODUCTS_LIST,
-        'sort' => 2,
     ],
     [
         'title' => 'Добавление товара',
         'path' => PATH_PRODUCTS_ADD,
-        'sort' => 3,
     ],
     [
         'title' => 'Выйти',
         'path' => PATH_ACCOUNT_AUTHORIZATION,
-        'sort' => 4,
     ],
 ];
 
@@ -109,65 +98,5 @@ $menuNavigationAnother = [
     [
         'title' => 'Выйти',
         'path' => PATH_ACCOUNT_AUTHORIZATION,
-        'sort' => 2,
     ],
 ];
-
-
-//$menuNavigation = [
-//    [
-//        'title' => 'Fashion', // Название пункта меню
-//        'path' => PATH_CATALOG, // Ссылка на страницу, куда ведет пункт меню
-//        'sort' => 1, // Индекс сортировки
-//    ],
-//    [
-//        'title' => 'Новинки',
-//        'path' => PATH_CATALOG_NEW,
-//        'sort' => 2,
-//    ],
-//    [
-//        'title' => 'Распродажа',
-//        'path' => PATH_CATALOG_SALE,
-//        'sort' => 3,
-//    ],
-//    [
-//        'title' => 'Список товаров',
-//        'path' => PATH_PRODUCTS_LIST,
-//        'sort' => 4,
-//    ],
-//    [
-//        'title' => 'Добавление товаров',
-//        'path' => PATH_PRODUCTS_ADD,
-//        'sort' => 5,
-//    ],
-//    [
-//        'title' => 'Изменение товаров',
-//        'path' => PATH_PRODUCTS_CHANGES,
-//        'sort' => 6,
-//    ],
-//    [
-//        'title' => 'Список заказов',
-//        'path' => PATH_ORDERS_LIST,
-//        'sort' => 7,
-//    ],
-//    [
-//        'title' => 'Оформление заказов',
-//        'path' => PATH_ORDERS_MAKE,
-//        'sort' => 8,
-//    ],
-//    [
-//        'title' => 'О доставке',
-//        'path' => PATH_ORDERS_DELIVERY,
-//        'sort' => 9,
-//    ],
-//    [
-//        'title' => 'Успешное создание заказа',
-//        'path' => PATH_ORDERS_SUCCESS,
-//        'sort' => 10,
-//    ],
-//    [
-//        'title' => 'Административный раздел',
-//        'path' => PATH_ADMIN,
-//        'sort' => 11,
-//    ],
-//];

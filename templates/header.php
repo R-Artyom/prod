@@ -30,7 +30,7 @@
     </a>
     <nav class="page-header__menu">
         <ul class="main-menu main-menu--header">
-            <?php showMenu($menuNavigation, 'main-menu--header'); ?>
+            <?php require $_SERVER['DOCUMENT_ROOT'] . '/templates/menu.php';?>
         </ul>
     </nav>
 </header>

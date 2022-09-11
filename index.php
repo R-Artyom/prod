@@ -1,17 +1,32 @@
 <?php
-
-// Функция формирование массива для постраничной навигации
-require $_SERVER['DOCUMENT_ROOT'] . '/include/pagination.php';
-// Массив с описанием пунктов меню
-require $_SERVER['DOCUMENT_ROOT'] . '/include/menu_navigation.php';
-// Соединение c сервером MySQL
-require $_SERVER['DOCUMENT_ROOT'] . '/include/db.php';
-// Функции проверки авторизации пользователя
-require $_SERVER['DOCUMENT_ROOT'] . '/include/authorization.php';
-// Функции для вывода пунктов меню
-require $_SERVER['DOCUMENT_ROOT'] . '/include/menu.php';
-
-// Логика "Меню навигации"
+/**
+ * Данные
+ */
+// Сессия
+require $_SERVER['DOCUMENT_ROOT'] . '/include/data/session.php';
+// Пункты меню
+require $_SERVER['DOCUMENT_ROOT'] . '/include/data/menu.php';
+// База данных MySQL
+require $_SERVER['DOCUMENT_ROOT'] . '/include/data/db.php';
+/**
+ * Функции
+ */
+// Сессия
+require $_SERVER['DOCUMENT_ROOT'] . '/include/functions/session.php';
+// Пункты меню
+require $_SERVER['DOCUMENT_ROOT'] . '/include/functions/menu.php';
+// База данных MySQL
+require $_SERVER['DOCUMENT_ROOT'] . '/include/functions/db.php';
+// Постраничная навигация
+require $_SERVER['DOCUMENT_ROOT'] . '/include/functions/pagination.php';
+// Формирование фраз
+require $_SERVER['DOCUMENT_ROOT'] . '/include/functions/phrase.php';
+/**
+ * Логика
+ */
+// Сессия
+require $_SERVER['DOCUMENT_ROOT'] . '/content/session.php';
+// Пункты меню
 require $_SERVER['DOCUMENT_ROOT'] . '/content/menu.php';
 
 // Страницы:
@@ -53,22 +68,6 @@ if (isCurrentUrl(PATH_MAIN)
     // Путь к шаблону страницы
     $pathTemplate = '/templates/authorization.php';
 }
-// Если пользователь аторизован
-//if (isAuthorization()) {
-//    // Если текущая страница "Профиль пользователя"
-//    if (isCurrentUrl(PATH_USER_PROFILE)) {
-//        // Логика страницы
-//        require $_SERVER['DOCUMENT_ROOT'] . '/content/user_profile.php';
-//    // Если текущая страница "Сообщения"
-//    } else if (isCurrentUrl(PATH_POSTS)) {
-//        // Логика страницы
-//        require $_SERVER['DOCUMENT_ROOT'] . '/content/posts.php';
-//    // Если текущая страница "Написать сообщение"
-//    } else if (isCurrentUrl(PATH_POSTS_ADD)) {
-//        // Логика страницы
-//        require $_SERVER['DOCUMENT_ROOT'] . '/content/posts_add.php';
-//    }
-//}
 
 // Шапка
 require $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
@@ -77,17 +76,6 @@ require $_SERVER['DOCUMENT_ROOT'] . '/templates/header.php';
 if (isset ($pathTemplate)) {
     require $_SERVER['DOCUMENT_ROOT'] . $pathTemplate;
 }
-
-//if (isCurrentUrl(PATH_CATALOG) || isCurrentUrl(PATH_CATALOG_NEW) || isCurrentUrl(PATH_CATALOG_SALE)) {
-//    // "Главная"
-//    include $_SERVER['DOCUMENT_ROOT'] . '/templates/catalog.php';
-//} else if (isCurrentUrl(PATH_ADMIN)) {
-//    // "Авторизация"
-//    require $_SERVER['DOCUMENT_ROOT'] . '/templates/authorization.php';
-//} else if (isCurrentUrl(PATH_ORDERS_DELIVERY)) {
-//    // "О доставке"
-//    require $_SERVER['DOCUMENT_ROOT'] . '/templates/delivery.php';
-//}
 
 // Подвал
 require $_SERVER['DOCUMENT_ROOT'] . '/templates/footer.php';

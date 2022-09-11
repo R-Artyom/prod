@@ -5,20 +5,7 @@
         </a>
         <nav class="page-footer__menu">
             <ul class="main-menu main-menu--footer">
-                <?php showMenu($menuNavigation, 'main-menu--footer'); ?>
-
-<!--                <li>-->
-<!--                    <a class="main-menu__item" href="#">Главная</a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a class="main-menu__item" href="#">Новинки</a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a class="main-menu__item">Sale</a>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <a class="main-menu__item" href="/templates/delivery.php">Доставка</a>-->
-<!--                </li>-->
+                <?php require $_SERVER['DOCUMENT_ROOT'] . '/templates/menu.php';?>
             </ul>
         </nav>
         <address class="page-footer__copyright">

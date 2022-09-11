@@ -54,4 +54,6 @@ if (isAuthorization())
 
 // Определение заголовка страницы
 $title = findTitle($menuNavigation);
-//var_dump($title);
+
+// Определение активной страницы
+$urlActive = findUrlActive($menuNavigation);
