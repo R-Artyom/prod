@@ -145,14 +145,18 @@ function getPageButtons($pageActive, $pageCount): array
         $pageButtons['lastSep']['show'] = null;
     }
     // Проверка граничных значений вторых кнопок
-    if ($pageButtons['left2']['num'] < 1) {
+    if ($pageButtons['left2']['num'] <= 1) {
         $pageButtons['left2']['show'] = null;
     }
-    if ($pageButtons['right2']['num'] > $pageCount) {
+    if ($pageButtons['right2']['num'] >= $pageCount) {
         $pageButtons['right2']['show'] = null;
     }
     if ($pageCount == 1) {
         $pageButtons['active']['show'] = null;
+    }
+    if ($pageCount == 4) {
+        $pageButtons['firstSep']['show'] = null;
+        $pageButtons['lastSep']['show'] = null;
     }
 
     // Возврат массива
