@@ -8,6 +8,8 @@ require $_SERVER['DOCUMENT_ROOT'] . '/include/data/session.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/include/data/menu.php';
 // База данных MySQL
 require $_SERVER['DOCUMENT_ROOT'] . '/include/data/db.php';
+// Стоимость доставки
+require $_SERVER['DOCUMENT_ROOT'] . '/include/data/price.php';
 /**
  * Функции
  */

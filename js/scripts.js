@@ -108,6 +108,16 @@ if (shopList) {
 
   shopList.addEventListener('click', (evt) => {
 
+    const productId = document.querySelector('#productId');
+    const productPrice = document.querySelector('#price');
+    const productPriceDelivery = document.querySelector('#priceDelivery');
+    // Значение идентификатора товара, отправляемого в форме
+    productId.value = parseInt(evt.target.id);
+    // Стоимость товара, отображаемая на странице, если самовывоз
+    productPrice.innerText = parseFloat(evt.target.children[2].textContent) + ' руб.';
+    // Стоимость товара, отображаемая на странице, если доставка на дом
+    productPriceDelivery.innerText = parseFloat(evt.target.children[3].textContent) + ' руб.';
+
     const prod = evt.path || (evt.composedPath && evt.composedPath());;
 
     if (prod.some(pathItem => pathItem.classList && pathItem.classList.contains('shop__item'))) {
@@ -127,8 +137,8 @@ if (shopList) {
       toggleDelivery(shopOrder);
 
       const buttonOrder = shopOrder.querySelector('.button');
-      const popupEnd = document.querySelector('.shop-page__popup-end');
-
+      //const popupEnd = document.querySelector('.shop-page__popup-end');
+      // Обработка кнопки "Применить"
       buttonOrder.addEventListener('click', (evt) => {
 
         form.noValidate = true;
@@ -137,6 +147,8 @@ if (shopList) {
 
         inputs.forEach(inp => {
 
+          // !! - Преобразование значений к логическому типу, т.е. если поле
+          // формы заполнено, то true, если пустое - то false
           if (!!inp.value) {
 
             if (inp.classList.contains('custom-form__input--error')) {
@@ -152,31 +164,31 @@ if (shopList) {
 
         if (inputs.every(inp => !!inp.value)) {
 
-          evt.preventDefault();
-
-          toggleHidden(shopOrder, popupEnd);
-
-          popupEnd.classList.add('fade');
-          setTimeout(() => popupEnd.classList.remove('fade'), 1000);
-
-          window.scroll(0, 0);
-
-          const buttonEnd = popupEnd.querySelector('.button');
-
-          buttonEnd.addEventListener('click', () => {
-
-
-            popupEnd.classList.add('fade-reverse');
-
-            setTimeout(() => {
-
-              popupEnd.classList.remove('fade-reverse');
-
-              toggleHidden(popupEnd, document.querySelector('.intro'), document.querySelector('.shop'));
-
-            }, 1000);
-
-          });
+          // evt.preventDefault();
+          //
+          // toggleHidden(shopOrder, popupEnd);
+          //
+          // popupEnd.classList.add('fade');
+          // setTimeout(() => popupEnd.classList.remove('fade'), 1000);
+          //
+          // window.scroll(0, 0);
+          //
+          // const buttonEnd = popupEnd.querySelector('.button');
+          // // Обработка кнопки "Продолжить покупки"
+          // buttonEnd.addEventListener('click', () => {
+          //
+          //
+          //   popupEnd.classList.add('fade-reverse');
+          //
+          //   setTimeout(() => {
+          //
+          //     popupEnd.classList.remove('fade-reverse');
+          //
+          //     toggleHidden(popupEnd, document.querySelector('.intro'), document.querySelector('.shop'));
+          //
+          //   }, 1000);
+          //
+          // });
 
         } else {
           window.scroll(0, 0);

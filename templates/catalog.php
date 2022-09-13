@@ -85,12 +85,13 @@
                 </form>
                 <section class="shop__list">
                     <?php foreach ($products as $value):?>
-                        <article class="shop__item product" tabindex="0">
+                        <article id = "<?=(int)$value['id']?>" class="shop__item product" tabindex="0">
                             <div class="product__image">
                                 <img src="/img/products/<?=$value['img_name'] . '?t=' . $timeUploadImg?>" alt="<?=$value['name']?>">
                             </div>
                             <p class="product__name"><?=$value['name']?></p>
                             <span class="product__price"><?=(float)$value['price']?> руб.</span>
+                            <span class="product__price_delivery" hidden="hidden"><?=(float)$value['price'] < PRICE_LIMIT ? (float)$value['price'] + PRICE_DELIVERY : (float)$value['price']?></span>
                         </article>
                     <?php endforeach ?>
                 </section>
@@ -118,7 +119,8 @@
     <section class="shop-page__order" hidden="">
         <div class="shop-page__wrapper">
             <h2 class="h h--1">Оформление заказа</h2>
-            <form action="#" method="post" class="custom-form js-order">
+            <form method="post" class="custom-form js-order">
+                <input id="productId" type="text" name="productId" value="" hidden="hidden">
                 <fieldset class="custom-form__group">
                     <legend class="custom-form__title">Укажите свои личные данные</legend>
                     <p class="custom-form__info">
@@ -138,11 +140,11 @@
                             <p class="custom-form__input-label">Отчество</p>
                         </label>
                         <label class="custom-form__input-wrapper" for="phone">
-                            <input id="phone" class="custom-form__input" type="tel" name="thirdName" required="">
+                            <input id="phone" class="custom-form__input" type="tel" name="phone" required="">
                             <p class="custom-form__input-label">Телефон <span class="req">*</span></p>
                         </label>
                         <label class="custom-form__input-wrapper" for="email">
-                            <input id="email" class="custom-form__input" type="email" name="thirdName" required="">
+                            <input id="email" class="custom-form__input" type="email" name="email" required="">
                             <p class="custom-form__input-label">Почта <span class="req">*</span></p>
                         </label>
                     </div>
@@ -173,6 +175,10 @@
                             <td class="custom-table__head">Срок доставки: </td>
                             <td class="date">13 декабря—15 декабря</td>
                         </tr>
+                        <tr>
+                            <td class="custom-table__head">Стоимость заказа:</td>
+                            <td id="price">3000</td>
+                        </tr>
                     </table>
                 </div>
                 <div class="shop-page__delivery shop-page__delivery--yes" hidden="">
@@ -199,6 +205,12 @@
                                 <p class="custom-form__input-label">Квартира <span class="req">*</span></p>
                             </label>
                         </div>
+                        <table class="custom-table">
+                            <tr>
+                                <td class="custom-table__head">Стоимость заказа с доставкой:</td>
+                                <td id="priceDelivery">3000</td>
+                            </tr>
+                        </table>
                     </fieldset>
                 </div>
                 <fieldset class="custom-form__group shop-page__pay">
@@ -214,13 +226,16 @@
                 </fieldset>
                 <button class="button" type="submit">Отправить заказ</button>
             </form>
+            <div id="result">
+                <!-- Вывод сообщения из ajax.php -->
+            </div>
         </div>
     </section>
     <section class="shop-page__popup-end" hidden="">
         <div class="shop-page__wrapper shop-page__wrapper--popup-end">
             <h2 class="h h--1 h--icon shop-page__end-title">Спасибо за заказ!</h2>
             <p class="shop-page__end-message">Ваш заказ успешно оформлен, с вами свяжутся в ближайшее время</p>
-            <button class="button">Продолжить покупки</button>
+            <a class="page-products__button button" href="<?=$_SERVER["REQUEST_URI"]?>">Продолжить покупки</a>
         </div>
     </section>
 </main>
