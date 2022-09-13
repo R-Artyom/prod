@@ -1,6 +1,6 @@
 <main class="page-add">
     <h1 class="h h--1"><?=$title?></h1>
-    <form id="formAddProduct" class="custom-form" action="<?=PATH_PRODUCTS_ADD?>" method="post">
+    <form id="formAddProduct" class="custom-form" method="post">
         <?php if (isset($product)): ?>
             <input type="text" name="product-id" value="<?=$product['id']?>" hidden="hidden">
         <?php endif ?>

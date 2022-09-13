@@ -2,7 +2,8 @@
 // Модуль обработки полученного от браузера ID продукта, данные о котором
 // необходимо удалить из базы данных
 // Соединение c сервером MySQL
-require $_SERVER['DOCUMENT_ROOT'] . '/include/db.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/include/data/db.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/include/functions/db.php';
 // Директория, где располагаются загруженные изображения
 $imgPath = $_SERVER['DOCUMENT_ROOT'] . '/img/products/';
 

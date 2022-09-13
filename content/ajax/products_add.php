@@ -1,6 +1,7 @@
 <?php
 // Соединение c сервером MySQL
-require $_SERVER['DOCUMENT_ROOT'] . '/include/db.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/include/data/db.php';
+require $_SERVER['DOCUMENT_ROOT'] . '/include/functions/db.php';
 // Директория, куда будет загружаться файл изображения
 $uploadPath = $_SERVER['DOCUMENT_ROOT'] . '/img/products/';
 // TODO проверка авторизации
