@@ -22,21 +22,21 @@
                 </li>
             <?php endforeach ?>
         </ul>
-            </br></br>
-            <ul class="shop__paginator paginator">
-                <?php foreach ($pageButtons as $button => $value): ?>
-                    <?php if (isset($value['show'])): ?>
-                        <li>
-                            <a class="<?=$value['class']?>"
-                                <?php if ($button != 'active' && $button != 'firstSep' && $button != 'lastSep'): ?>
-                                    href="<?=PATH_PRODUCTS_LIST . '?page=' . $value['num']?>"
-                                <?php endif ?>>
-                                <?=$value['text']?>
-                            </a>
-                        </li>
-                    <?php endif ?>
-                <?php endforeach ?>
-            </ul>
+        </br></br>
+        <ul class="shop__paginator paginator">
+            <?php foreach ($pageButtons as $button => $value): ?>
+                <?php if (isset($value['show'])): ?>
+                    <li>
+                        <a class="<?=$value['class']?>"
+                            <?php if ($button != 'active' && $button != 'firstSep' && $button != 'lastSep'): ?>
+                                href="<?=PATH_PRODUCTS_LIST . '?page=' . $value['num']?>"
+                            <?php endif ?>>
+                            <?=$value['text']?>
+                        </a>
+                    </li>
+                <?php endif ?>
+            <?php endforeach ?>
+        </ul>
     <?php else: ?>
         <div>
             Для просмотра списка товаров необходимо добавить хотя бы один товар

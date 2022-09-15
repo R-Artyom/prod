@@ -224,15 +224,26 @@ if (pageOrderList) {
     if (evt.target.classList && evt.target.classList.contains('order-item__btn')) {
 
       const status = evt.target.previousElementSibling;
-
-      if (status.classList && status.classList.contains('order-item__info--no')) {
-        status.textContent = 'Выполнено';
-      } else {
-        status.textContent = 'Не выполнено';
-      }
-
-      status.classList.toggle('order-item__info--no');
-      status.classList.toggle('order-item__info--yes');
+      const id = evt.target.value;
+      $.ajax({
+        url: '/content/ajax/orders.php',
+        method: 'GET',
+        dataType: 'json',
+        cache: false,
+        data: {orderId: id, orderStatus: status.textContent},
+        success: function(dataJson) {
+          // Если данные в базе обновились успешно
+          if (dataJson === true) {
+            if (status.classList && status.classList.contains('order-item__info--no')) {
+              status.textContent = 'Обработан';
+            } else {
+              status.textContent = 'Не обработан';
+            }
+            status.classList.toggle('order-item__info--no');
+            status.classList.toggle('order-item__info--yes');
+          }
+        }
+      });
 
     }
 
