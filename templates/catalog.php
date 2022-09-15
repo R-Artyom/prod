@@ -91,7 +91,7 @@
                             </div>
                             <p class="product__name"><?=$value['name']?></p>
                             <span class="product__price"><?=(float)$value['price']?> руб.</span>
-                            <span class="product__price_delivery" hidden="hidden"><?=(float)$value['price'] < PRICE_LIMIT ? (float)$value['price'] + PRICE_DELIVERY : (float)$value['price']?></span>
+                            <span class="product__price_delivery" hidden="hidden"><?=(float)$value['price'] < DELIVERY_LIMIT ? (float)$value['price'] + DELIVERY_PRICE : (float)$value['price']?></span>
                         </article>
                     <?php endforeach ?>
                 </section>
@@ -161,7 +161,7 @@
                         <caption class="custom-table__title">Пункт самовывоза</caption>
                         <tr>
                             <td class="custom-table__head">Адрес:</td>
-                            <td>Москва г, Тверская ул,<br> 4 Метро «Охотный ряд»</td>
+                            <td><?=DELIVERY_ADDRESS?></td>
                         </tr>
                         <tr>
                             <td class="custom-table__head">Время работы:</td>
@@ -173,7 +173,7 @@
                         </tr>
                         <tr>
                             <td class="custom-table__head">Срок доставки: </td>
-                            <td class="date">13 декабря—15 декабря</td>
+                            <td class="date">2-7 рабочих дня</td>
                         </tr>
                         <tr>
                             <td class="custom-table__head">Стоимость заказа:</td>

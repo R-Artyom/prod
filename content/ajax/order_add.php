@@ -2,8 +2,8 @@
 // База данных MySQL
 require $_SERVER['DOCUMENT_ROOT'] . '/include/data/db.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/include/functions/db.php';
-// Стоимость доставки
-require $_SERVER['DOCUMENT_ROOT'] . '/include/data/price.php';
+// Доставка товара
+require $_SERVER['DOCUMENT_ROOT'] . '/include/data/delivery.php';
 
 // Признак - "Заполнены все обязательные поля "Личные данные" формы"
 $isPersonalFull = !empty($_POST['surname'])
@@ -33,7 +33,7 @@ if ($isAllFull) {
     $phone = mysqli_real_escape_string($connection, $_POST['phone']);
     $email = mysqli_real_escape_string($connection, $_POST['email']);
     $product_id = mysqli_real_escape_string($connection, $_POST['productId']);
-    $price = mysqli_real_escape_string($connection, (float)$product['price'] < PRICE_LIMIT ? (float)$product['price'] + PRICE_DELIVERY : (float)$product['price']);
+    $price = mysqli_real_escape_string($connection, (float)$product['price'] < DELIVERY_LIMIT ? (float)$product['price'] + DELIVERY_PRICE : (float)$product['price']);
     $delivery = $_POST['delivery'] === 'dev-no' // Если чекбокс "Самовывоз" отмечен
         ? mysqli_real_escape_string($connection, 'Самовывоз')
         : mysqli_real_escape_string($connection, "г. " . $_POST['city'] . ", ул. " . $_POST['street'] . ", д. " . $_POST['home'] . ", кв. " . $_POST['aprt']);
