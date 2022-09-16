@@ -67,6 +67,12 @@ $menuNavigationUser = [
 // Меню для группы "operator"
 $menuNavigationOperator = [
     [
+        'title' => 'Главная', // Название пункта меню
+        'path' => PATH_MAIN, // Ссылка на страницу, куда ведет пункт меню
+        'pathLevel1' => ['catalog/'], // Первый уровень вложенности директории
+        'pathLevel2' => PATH_CATEGORIES, // Второй уровень вложенности директории
+    ],
+    [
         'title' => 'Заказы',
         'path' => PATH_ORDERS_LIST,
     ],
@@ -78,6 +84,12 @@ $menuNavigationOperator = [
 
 // Меню для группы "administrator"
 $menuNavigationAdministrator = [
+    [
+        'title' => 'Главная', // Название пункта меню
+        'path' => PATH_MAIN, // Ссылка на страницу, куда ведет пункт меню
+        'pathLevel1' => ['catalog/'], // Первый уровень вложенности директории
+        'pathLevel2' => PATH_CATEGORIES, // Второй уровень вложенности директории
+    ],
     [
         'title' => 'Заказы',
         'path' => PATH_ORDERS_LIST,
@@ -99,6 +111,12 @@ $menuNavigationAdministrator = [
 // Меню для группы "another" (пользователь, не обладающий правами админимтратора
 // и оператора, но авторизированный)
 $menuNavigationAnother = [
+    [
+        'title' => 'Главная', // Название пункта меню
+        'path' => PATH_MAIN, // Ссылка на страницу, куда ведет пункт меню
+        'pathLevel1' => ['catalog/'], // Первый уровень вложенности директории
+        'pathLevel2' => PATH_CATEGORIES, // Второй уровень вложенности директории
+    ],
     [
         'title' => 'Выйти',
         'path' => PATH_ACCOUNT_AUTHORIZATION,
