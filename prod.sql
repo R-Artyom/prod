@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Сен 16 2022 г., 17:49
+-- Время создания: Сен 16 2022 г., 17:55
 -- Версия сервера: 5.7.38
 -- Версия PHP: 7.4.29
 
@@ -200,23 +200,21 @@ CREATE TABLE `users` (
   `full_name` varchar(255) NOT NULL COMMENT 'ФИО',
   `email` varchar(255) NOT NULL COMMENT 'Электронная почта (логин)',
   `password` varchar(255) NOT NULL COMMENT 'Пароль (в зашифрованном виде)',
-  `phone` varchar(20) DEFAULT NULL COMMENT 'Номер телефона',
-  `active_en` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Флаг активности пользователя (активен ''1'' / неактивен ''0'')',
-  `notify_en` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Флаг согласия на получение уведомлений по email (согласен ''1'' / не согласен ''0'')'
+  `phone` varchar(20) DEFAULT NULL COMMENT 'Номер телефона'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `users`
 --
 
-INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `phone`, `active_en`, `notify_en`) VALUES
-(1, 'Иванов Иван Иванович', 'ivanov@gmail.com', '$2y$10$2JZkDrjAmyy998bsHwzqyO/UhKeEajoqKYoeGHsVSV6x5YYEUUife', '+74951111111', 0, 1),
-(2, 'Петров Пётр Петрович', 'petrov@gmail.com', '$2y$10$bWMB8bpsgCUG639YPC3sU.hNotseZsbZGvuoNqMqT7810oIE5sVC.', NULL, 0, 0),
-(3, 'Сидоров Сидор Сидорович', 'sidorov@gmail.com', '$2y$10$XtIeUhwA6nLBtaCTzJLKX.YZDl4XZSJ2I7C7XEaF8G4AZ2skpKc.a', '+74953333333', 0, 0),
-(4, 'Васильев Василий Васильевич', 'vasiliev@gmail.com', '$2y$10$bZbHhWIfGNUA9UHNe0HNc.6XK9J3e2Y56v0FOU1IkQo.oy9yc29Zy', NULL, 0, 0),
-(5, 'Андреев Андрей Андреевич', 'andreev@gmail.com', '$2y$10$7vWGrFJf35Hj/o/5FL.90uLvhctur1cuXyWsbRJCTLFB.qBnGho7W', NULL, 0, 0),
-(6, 'Александров Александр Александрович', 'aleksandrov@gmail.com', '$2y$10$u1Paw83vBxpxwkrboOo80upkk3RV8vTm.mfGtZle8VscKvZUVs/d.', '+74956666666', 0, 1),
-(7, 'Любаев Любим Любимович', 'lyubaev@gmail.com', '$2y$10$LPU0n1/UawbLhZxVkj.AZePDkTu8lK69JuXIKqddSDcbMP./vZBda', '+79991112345', 0, 0);
+INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `phone`) VALUES
+(1, 'Иванов Иван Иванович', 'ivanov@gmail.com', '$2y$10$2JZkDrjAmyy998bsHwzqyO/UhKeEajoqKYoeGHsVSV6x5YYEUUife', '+74951111111'),
+(2, 'Петров Пётр Петрович', 'petrov@gmail.com', '$2y$10$bWMB8bpsgCUG639YPC3sU.hNotseZsbZGvuoNqMqT7810oIE5sVC.', NULL),
+(3, 'Сидоров Сидор Сидорович', 'sidorov@gmail.com', '$2y$10$XtIeUhwA6nLBtaCTzJLKX.YZDl4XZSJ2I7C7XEaF8G4AZ2skpKc.a', '+74953333333'),
+(4, 'Васильев Василий Васильевич', 'vasiliev@gmail.com', '$2y$10$bZbHhWIfGNUA9UHNe0HNc.6XK9J3e2Y56v0FOU1IkQo.oy9yc29Zy', NULL),
+(5, 'Андреев Андрей Андреевич', 'andreev@gmail.com', '$2y$10$7vWGrFJf35Hj/o/5FL.90uLvhctur1cuXyWsbRJCTLFB.qBnGho7W', NULL),
+(6, 'Александров Александр Александрович', 'aleksandrov@gmail.com', '$2y$10$u1Paw83vBxpxwkrboOo80upkk3RV8vTm.mfGtZle8VscKvZUVs/d.', '+74956666666'),
+(7, 'Любаев Любим Любимович', 'lyubaev@gmail.com', '$2y$10$LPU0n1/UawbLhZxVkj.AZePDkTu8lK69JuXIKqddSDcbMP./vZBda', '+79991112345');
 
 --
 -- Индексы сохранённых таблиц
