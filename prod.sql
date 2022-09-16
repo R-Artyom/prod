@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 24 2022 г., 06:54
--- Версия сервера: 5.7.29
--- Версия PHP: 7.4.5
+-- Время создания: Сен 16 2022 г., 07:17
+-- Версия сервера: 5.7.38
+-- Версия PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,27 +24,60 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `colors`
+-- Структура таблицы `categories`
 --
 
-CREATE TABLE `colors` (
-  `id` int(11) NOT NULL COMMENT 'Уникальный идентификатор цвета',
-  `name` varchar(255) NOT NULL COMMENT 'Название цвета',
-  `description` varchar(255) NOT NULL COMMENT 'Описание цвета'
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL COMMENT 'Уникальный идентификатор раздела товаров',
+  `name` varchar(255) NOT NULL COMMENT 'Название раздела товаров',
+  `description` varchar(255) NOT NULL COMMENT 'Описание раздела товаров'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `colors`
+-- Дамп данных таблицы `categories`
 --
 
-INSERT INTO `colors` (`id`, `name`, `description`) VALUES
-(1, 'red', 'Красный'),
-(2, 'orange', 'Оранжевый'),
-(3, 'yellow', 'Желтый'),
-(4, 'green', 'Зеленый'),
-(5, 'lightblue', 'Голубой'),
-(6, 'blue', 'Синий'),
-(7, 'purple', 'Фиолетовый');
+INSERT INTO `categories` (`id`, `name`, `description`) VALUES
+(1, 'Женщины', 'Товары для женщин'),
+(2, 'Мужчины', 'Товары для мужчин'),
+(3, 'Дети', 'Товары для детей'),
+(4, 'Аксессуары', 'Аксессуары');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `categories_products`
+--
+
+CREATE TABLE `categories_products` (
+  `category_id` int(11) NOT NULL COMMENT 'Уникальный идентификатор раздела товара',
+  `product_id` int(11) NOT NULL COMMENT 'Уникальный идентификатор товара'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `categories_products`
+--
+
+INSERT INTO `categories_products` (`category_id`, `product_id`) VALUES
+(1, 273),
+(4, 273),
+(1, 275),
+(1, 276),
+(1, 277),
+(1, 278),
+(1, 279),
+(2, 280),
+(4, 280),
+(1, 282),
+(1, 283),
+(1, 286),
+(2, 286),
+(4, 286),
+(1, 288),
+(2, 289),
+(3, 291),
+(1, 292),
+(3, 293);
 
 -- --------------------------------------------------------
 
@@ -97,67 +130,69 @@ INSERT INTO `group_user` (`user_id`, `group_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `messages`
+-- Структура таблицы `orders`
 --
 
-CREATE TABLE `messages` (
-  `id` int(11) NOT NULL COMMENT 'Уникальный идентификатор сообщения',
-  `title` varchar(255) NOT NULL COMMENT 'Заголовок сообщения',
-  `text` text NOT NULL COMMENT 'Текст сообщения',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата и время создания сообщения',
-  `created_by` int(11) NOT NULL COMMENT 'Идентификатор пользователя-отправителя сообщения',
-  `user_id_to` int(11) NOT NULL COMMENT 'Идентификатор пользователя-получателя сообщения',
-  `section_id` int(11) NOT NULL COMMENT 'Идентификатор раздела',
-  `read` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Флаг - сообщение прочитано / не прочитано'
+CREATE TABLE `orders` (
+  `id` int(11) NOT NULL COMMENT 'Уникальный идентификатор заказа',
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата и время создания заказа',
+  `created_by` varchar(255) NOT NULL COMMENT 'ФИО клиента',
+  `phone` varchar(20) DEFAULT NULL COMMENT 'Номер телефона',
+  `email` varchar(255) NOT NULL COMMENT 'Электронная почта',
+  `product_id` int(11) NOT NULL COMMENT 'Уникальный идентификатор товара',
+  `price` decimal(10,2) NOT NULL COMMENT 'Стоимость заказа, учитывая доставку',
+  `delivery` varchar(255) NOT NULL COMMENT 'Информация о доставке (самовывоз / адрес)',
+  `payment` tinyint(1) NOT NULL COMMENT 'Информация об оплате (наличные (1) / карта (0))',
+  `status` tinyint(1) DEFAULT '0' COMMENT 'Статус заказа (обработан (1) / не обработан (0))',
+  `comment` varchar(255) DEFAULT NULL COMMENT 'Комментарий к заказу'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `messages`
+-- Дамп данных таблицы `orders`
 --
 
-INSERT INTO `messages` (`id`, `title`, `text`, `created_at`, `created_by`, `user_id_to`, `section_id`, `read`) VALUES
-(1, 'Протокол', 'Надо изменить п.1.23', '2021-06-04 07:27:25', 3, 1, 1, 1),
-(2, 'Замена DD3', 'Прошу провести испытания', '2021-06-05 20:28:02', 6, 1, 1, 1),
-(3, 'Замена микросхемы DD2', 'Изменился поставщик', '2021-06-05 20:29:34', 6, 1, 1, 0),
-(4, 'Рэндом', 'Равным образом консультация с широким активом требуют определения и уточнения модели развития. Товарищи! постоянное информационно-пропагандистское обеспечение нашей деятельности позволяет выполнять важные задания по разработке модели развития. Идейные соображения высшего порядка, а также дальнейшее развитие различных форм деятельности позволяет оценить значение новых предложений.\r\nЗначимость этих проблем настолько очевидна, что консультация с широким активом играет важную роль в формировании новых предложений. . Равным образом рамки и место обучения кадров влечет за собой процесс внедрения и модернизации системы обучения кадров, соответствует насущным потребностям.\r\nРазнообразный и богатый опыт консультация с широким активом обеспечивает широкому кругу. Идейные соображения высшего порядка, а также укрепление и развитие структуры играет важную роль в формировании существенных финансовых и административных условий.', '2021-06-06 20:44:22', 2, 1, 2, 1),
-(5, 'Эльдорадо дарит подарки', 'Скидка 99,9%', '2021-06-11 12:09:33', 4, 6, 3, 0),
-(6, 'Подарок от Колорадо', 'Скидки 1 %', '2021-06-12 21:24:50', 7, 6, 3, 0),
-(7, 'Срочно!', 'Свяжись со мной!!!', '2021-06-13 13:05:24', 7, 2, 2, 0),
-(8, 'Подарки от пятёрочки', 'Скидки 55% на всё', '2021-06-13 18:45:05', 1, 4, 2, 1),
-(9, 'Сигнализация', 'Поставь объект на охрану', '2021-06-15 13:13:57', 6, 4, 2, 1),
-(10, 'Всё', 'Или не всё', '2021-06-15 15:14:47', 1, 7, 1, 1),
-(11, 'Всё еще?', 'Или уже нет', '2021-06-16 18:09:14', 1, 7, 3, 0),
-(12, 'Или уже нет!', 'Всё еще?', '2021-06-16 18:10:11', 1, 7, 3, 0),
-(13, 'Почти', 'Всё', '2021-06-19 13:55:25', 7, 2, 6, 0);
+INSERT INTO `orders` (`id`, `created_at`, `created_by`, `phone`, `email`, `product_id`, `price`, `delivery`, `payment`, `status`, `comment`) VALUES
+(88, '2022-09-13 10:14:09', 'Рябов Артём Юрьевич', '+7383286825', 'mortemus@ngs.ru', 292, '300000.00', 'г. Новосибирск, ул. Физкультурная, д. 9, кв. 14', 0, 0, 'Сдачи не надо'),
+(89, '2022-09-13 10:16:34', 'Иванов Иван ', '+7383286825', 'ivanov@gmail.com', 283, '12000.00', 'Самовывоз', 1, 1, ''),
+(94, '2022-09-15 12:16:23', 'Петров Иван ', '+7999999987', 'petrov@gmail.com', 280, '250000.83', 'Самовывоз', 1, 1, ''),
+(95, '2022-09-15 13:49:38', 'Петров Иван Петрович', '+7383286825', 'petrov@gmail.com', 279, '580.00', 'г. Москва, ул. Ленина, д. 1, кв. 2', 1, 0, ''),
+(96, '2022-09-16 07:15:59', 'Сидоров Иван Иванович', '+79039981515', 'sidorov@gmail.com', 293, '780.00', 'г. Москва, ул. Ленина, д. 9, кв. 2', 0, 0, 'Домофона нет');
 
 -- --------------------------------------------------------
 
 --
--- Структура таблицы `sections`
+-- Структура таблицы `products`
 --
 
-CREATE TABLE `sections` (
-  `id` int(11) NOT NULL COMMENT 'Уникальный идентификатор раздела',
-  `parent_id` int(11) NOT NULL COMMENT 'Уникальный идентификатор родительского раздела',
-  `name` varchar(255) NOT NULL COMMENT 'Название раздела',
-  `color_id` int(11) NOT NULL COMMENT 'Идентификатор цвета раздела',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Дата и время создания раздела',
-  `created_by` int(11) NOT NULL COMMENT 'Идентификатор пользователя, создавшего раздел'
+CREATE TABLE `products` (
+  `id` int(11) NOT NULL COMMENT 'Уникальный идентификатор товара',
+  `name` varchar(255) NOT NULL COMMENT 'Название товара',
+  `img_name` varchar(255) NOT NULL COMMENT 'Название файла с изображением товара',
+  `price` decimal(10,2) NOT NULL COMMENT 'Цена товара',
+  `new` tinyint(1) NOT NULL COMMENT 'Признак "Новинка"',
+  `sale` tinyint(1) NOT NULL COMMENT 'Признак "Распродажа"'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Дамп данных таблицы `sections`
+-- Дамп данных таблицы `products`
 --
 
-INSERT INTO `sections` (`id`, `parent_id`, `name`, `color_id`, `created_at`, `created_by`) VALUES
-(1, 0, 'Основные', 6, '2021-06-05 15:45:46', 3),
-(2, 0, 'Оповещения', 4, '2021-06-05 16:31:46', 5),
-(3, 0, 'Спам', 1, '2021-06-05 16:32:09', 1),
-(4, 1, 'По работе', 2, '2021-06-19 13:44:15', 1),
-(5, 1, 'Личные', 3, '2021-06-19 13:45:59', 2),
-(6, 2, 'Форумы', 5, '2021-06-19 13:52:52', 3),
-(7, 2, 'Магазины', 7, '2021-06-19 13:53:39', 4),
-(8, 2, 'Подписки', 4, '2021-06-19 13:54:06', 5);
+INSERT INTO `products` (`id`, `name`, `img_name`, `price`, `new`, `sale`) VALUES
+(273, 'Часы', '273.jpg', '29000.00', 1, 0),
+(275, 'Платье белое', '275.jpg', '15000.00', 0, 0),
+(276, 'Рубашка', '276.jpg', '5000.00', 0, 0),
+(277, 'Шорты', '277.jpg', '3000.00', 0, 1),
+(278, 'Платье красное', '278.jpg', '27000.00', 1, 0),
+(279, 'Брюки', '279.jpg', '300.00', 0, 1),
+(280, 'Часы', '280.png', '250000.83', 1, 0),
+(282, 'Сапоги', '282.jpg', '9000.00', 1, 1),
+(283, 'Джинсы', '283.jpg', '12000.00', 0, 0),
+(286, 'Фитнес-браслет', '286.png', '3331.00', 1, 0),
+(288, 'Шорты', '288.PNG', '2367.00', 1, 0),
+(289, 'Шорты', '289.PNG', '900.00', 0, 1),
+(291, 'Браслет', '291.png', '124.00', 0, 1),
+(292, 'Платье', '292.jpg', '300000.00', 1, 0),
+(293, 'Рюкзак', '293.png', '500.00', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -193,12 +228,17 @@ INSERT INTO `users` (`id`, `full_name`, `email`, `password`, `phone`, `active_en
 --
 
 --
--- Индексы таблицы `colors`
+-- Индексы таблицы `categories`
 --
-ALTER TABLE `colors`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`),
-  ADD UNIQUE KEY `name` (`name`);
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `categories_products`
+--
+ALTER TABLE `categories_products`
+  ADD PRIMARY KEY (`category_id`,`product_id`),
+  ADD KEY `product_id` (`product_id`);
 
 --
 -- Индексы таблицы `groups`
@@ -216,25 +256,18 @@ ALTER TABLE `group_user`
   ADD KEY `group_id` (`group_id`);
 
 --
--- Индексы таблицы `messages`
+-- Индексы таблицы `orders`
 --
-ALTER TABLE `messages`
+ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`),
-  ADD KEY `messages_ibfk_1` (`user_id_to`),
-  ADD KEY `messages_ibfk_2` (`created_by`),
-  ADD KEY `messages_ibfk_3` (`section_id`);
+  ADD KEY `product_id` (`product_id`);
 
 --
--- Индексы таблицы `sections`
+-- Индексы таблицы `products`
 --
-ALTER TABLE `sections`
+ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `id` (`id`),
-  ADD UNIQUE KEY `name` (`name`),
-  ADD KEY `sections_ibfk_1` (`color_id`),
-  ADD KEY `sections_ibfk_2` (`created_by`),
-  ADD KEY `parent_id` (`parent_id`);
+  ADD UNIQUE KEY `id` (`id`);
 
 --
 -- Индексы таблицы `users`
@@ -250,10 +283,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT для таблицы `colors`
+-- AUTO_INCREMENT для таблицы `categories`
 --
-ALTER TABLE `colors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор цвета', AUTO_INCREMENT=8;
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор раздела товаров', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `groups`
@@ -262,16 +295,16 @@ ALTER TABLE `groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор группы', AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT для таблицы `messages`
+-- AUTO_INCREMENT для таблицы `orders`
 --
-ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор сообщения', AUTO_INCREMENT=14;
+ALTER TABLE `orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор заказа', AUTO_INCREMENT=97;
 
 --
--- AUTO_INCREMENT для таблицы `sections`
+-- AUTO_INCREMENT для таблицы `products`
 --
-ALTER TABLE `sections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор раздела', AUTO_INCREMENT=9;
+ALTER TABLE `products`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Уникальный идентификатор товара', AUTO_INCREMENT=294;
 
 --
 -- AUTO_INCREMENT для таблицы `users`
@@ -284,6 +317,13 @@ ALTER TABLE `users`
 --
 
 --
+-- Ограничения внешнего ключа таблицы `categories_products`
+--
+ALTER TABLE `categories_products`
+  ADD CONSTRAINT `categories_products_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `categories_products_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Ограничения внешнего ключа таблицы `group_user`
 --
 ALTER TABLE `group_user`
@@ -291,19 +331,10 @@ ALTER TABLE `group_user`
   ADD CONSTRAINT `group_user_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Ограничения внешнего ключа таблицы `messages`
+-- Ограничения внешнего ключа таблицы `orders`
 --
-ALTER TABLE `messages`
-  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_id_to`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `messages_ibfk_3` FOREIGN KEY (`section_id`) REFERENCES `sections` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `sections`
---
-ALTER TABLE `sections`
-  ADD CONSTRAINT `sections_ibfk_1` FOREIGN KEY (`color_id`) REFERENCES `colors` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `sections_ibfk_2` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `orders`
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
