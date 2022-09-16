@@ -12,6 +12,20 @@ function findTitle(array $array): string
         if (isCurrentUrl($value['path'])) {
             // Возвращаем заголовок страницы
             return $value['title'];
+        // Проверка вложенных каталогов первого уровня
+        } else if (isset($value['pathLevel1'])) {
+            foreach ($value['pathLevel1'] as $value1) {
+                if (isCurrentUrl($value['path'] . $value1)) {
+                    return $value['title'];
+                // Проверка вложенных каталогов второго уровня
+                } else if (isset($value['pathLevel2'])) {
+                    foreach ($value['pathLevel2'] as $value2) {
+                        if (isCurrentUrl($value['path'] . $value1 . $value2)) {
+                            return $value['title'];
+                        }
+                    }
+                }
+            }
         }
     }
     // Если страница не найдена, то возвращаем ошибку
@@ -30,12 +44,12 @@ function findUrlActive(array $array): string
         // Если url страницы один в один совпадает
         if (isCurrentUrl($value['path'])) {
             return $value['path'];
-        // Если совпадает только корневой каталог но не "Главный"(/)
+        // Если совпадает только корневой каталог, но не "Главный"(/)
         } else if (strpos($_SERVER["REQUEST_URI"], $value['path']) === 0 && $value['path'] != PATH_MAIN) {
             return $value['path'];
         }
     }
-    // Если не попал ни под один критерий -то это главная страница
+    // Если не попал ни под один критерий - то это главная страница
     return PATH_MAIN;
 }
 
