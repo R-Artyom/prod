@@ -115,9 +115,9 @@ $filter = [
     // Порядок (по возрастанию (ASC), убыванию (DESC))
     'order' => empty($_GET['order']) ? null : $_GET['order'],
     // Минимальная цена
-    'sliderMin' => $_GET['sliderMin'] ?? null,
+    'sliderMin' => isset($_GET['sliderMin']) && (float)$_GET['sliderMin'] >= $sliderMin ? (float)$_GET['sliderMin'] : null,
     // Максимальная цена
-    'sliderMax' => $_GET['sliderMax'] ?? null,
+    'sliderMax' => isset($_GET['sliderMax']) && (float)$_GET['sliderMax'] <= $sliderMax && (float)$_GET['sliderMax'] != 0? (float)$_GET['sliderMax'] : null,
     // Новинки
     'new' => isset($_GET['new']) || ($pathActive === PATH_CATALOG_NEW) ? 'new' : null,
     // Распродажа
@@ -126,13 +126,13 @@ $filter = [
 // Массив с фильтрами для sql запросов
 $filterDb = [
     // Сортировка (по цене (price), названию (name))
-    'sort' => $filter['sort'] ?? 'name',
+    'sort' => mysqli_real_escape_string($connection,$filter['sort'] ?? 'name'),
     // Порядок (по возрастанию (ASC), убыванию (DESC))
-    'order' => $filter['order'] ?? 'ASC',
+    'order' => mysqli_real_escape_string($connection,$filter['order'] ?? 'ASC'),
     // Минимальная цена
-    'sliderMin' => $filter['sliderMin'] ?? $sliderMin,
+    'sliderMin' => mysqli_real_escape_string($connection,$filter['sliderMin'] ?? $sliderMin),
     // Максимальная цена
-    'sliderMax' => $filter['sliderMax'] ?? $sliderMax,
+    'sliderMax' => mysqli_real_escape_string($connection,$filter['sliderMax'] ?? $sliderMax),
     // Новинки
     'new' => isset($filter['new']) ? 1 : 0,
     // Распродажа
