@@ -46,10 +46,8 @@
                     <option value="4" <?=$categories['4'] ?? ''?>>Аксессуары</option>
                 </select>
             </div>
-            <!--TODO-->
             <input type="checkbox" name="new" id="new" class="custom-form__checkbox" <?=isset($product['new']) && $product['new'] == 1 ? 'checked="checked"' : ''?>>
             <label for="new" class="custom-form__checkbox-label">Новинка</label>
-            <!--TODO-->
             <input type="checkbox" name="sale" id="sale" class="custom-form__checkbox" <?=isset($product['sale']) && $product['sale'] == 1 ? 'checked="checked"' : ''?>>
             <label for="sale" class="custom-form__checkbox-label">Распродажа</label>
         </fieldset>

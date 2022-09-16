@@ -59,7 +59,6 @@ if (isset($_POST['product-name']) &&
     $name = mysqli_real_escape_string($connection, $_POST['product-name']);
     $img_name = $img_name ?? '';
     $price = mysqli_real_escape_string($connection, $_POST['product-price']);
-    // TODO - в БД сделать '1' или 'null'
     $new = isset($_POST['new']) // Если чекбокс "Новинка" отмечен, то 1, иначе 0
         ? mysqli_real_escape_string($connection, 1)
         : mysqli_real_escape_string($connection, 0);
