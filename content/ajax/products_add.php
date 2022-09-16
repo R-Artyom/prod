@@ -1,4 +1,6 @@
 <?php
+// Данные о загружаемом файле
+require $_SERVER['DOCUMENT_ROOT'] . '/include/data/file.php';
 // Соединение c сервером MySQL
 require $_SERVER['DOCUMENT_ROOT'] . '/include/data/db.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/include/functions/db.php';
@@ -10,6 +12,18 @@ $uploadPath = $_SERVER['DOCUMENT_ROOT'] . '/img/products/';
 if (($_FILES['product-photo']['error'] === UPLOAD_ERR_NO_FILE) && (!isset($_POST['product-id']))){
     // Вывести сообщение и прекратить выполнение текущего скрипта
     exit(json_encode("Внимание!!! Необходимо добавить фотографию товара<br/><br/>"));
+}
+// Если причина ошибки - слишком большой размер файла
+if ($_FILES['product-photo']['error'] === UPLOAD_ERR_FORM_SIZE) {
+    // Вывести сообщение и прекратить выполнение текущего скрипта
+    exit(json_encode("Внимание!!! Файл \"{$_FILES['product-photo']['name']}\" не загружен!!! Cлишком большой размер.<br/><br/>"));
+}
+// Определение типа файла в случае отсутствия ошибок при загрузке файла во временную директорию
+$mime_type = mime_content_type($_FILES['product-photo']['tmp_name']);
+// Если тип файла не найден в списке разрешенных
+if (!in_array ($mime_type, ALLOWED_IMG_TYPE, true)) {
+    // Вывести сообщение и прекратить выполнение текущего скрипта
+    exit(json_encode("Внимание!!! Файл \"{$_FILES['product-photo']['name']}\" не загружен!!! Тип файла не поддерживается.<br/><br/>"));
 }
 // Если заполнены поля формы
 // "Название товара",

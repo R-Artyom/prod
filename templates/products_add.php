@@ -28,7 +28,9 @@
             </div>
             <ul class="add-list">
                 <li class="add-list__item add-list__item--add">
-                    <input type="file" name="product-photo" id="product-photo" hidden="">
+                    <input type="hidden" name="MAX_FILE_SIZE" value="<?=MAX_FILE_SIZE?>">
+                    <input type="file" name="product-photo" id="product-photo" hidden=""
+                           accept="<?php foreach (ALLOWED_IMG_TYPE as $value):?><?=$value . ','?><?php endforeach ?>">
                     <label for="product-photo"><?=isset($product) ? 'Изменить фотографию?' : 'Добавить фотографию'?></label>
                 </li>
             </ul>

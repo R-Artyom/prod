@@ -10,6 +10,8 @@ require $_SERVER['DOCUMENT_ROOT'] . '/include/data/menu.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/include/data/db.php';
 // Доставка товара
 require $_SERVER['DOCUMENT_ROOT'] . '/include/data/delivery.php';
+// Загружаемый файл
+require $_SERVER['DOCUMENT_ROOT'] . '/include/data/file.php';
 /**
  * Подключение минимального набора функций
  */
