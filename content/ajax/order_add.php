@@ -1,4 +1,7 @@
 <?php
+/**
+ * Обработка AJAX запросов страницы "Оформление заказа"
+ */
 // База данных MySQL
 require $_SERVER['DOCUMENT_ROOT'] . '/include/data/db.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/include/functions/db.php';

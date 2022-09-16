@@ -1,6 +1,7 @@
 <?php
-// Модуль обработки полученного от браузера ID продукта, данные о котором
-// необходимо удалить из базы данных
+/**
+ * Обработка AJAX запросов страницы "Товары" (удаление товара)
+ */
 // Соединение c сервером MySQL
 require $_SERVER['DOCUMENT_ROOT'] . '/include/data/db.php';
 require $_SERVER['DOCUMENT_ROOT'] . '/include/functions/db.php';

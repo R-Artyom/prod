@@ -66,8 +66,6 @@ if ($title === 'Страница не найдена') {
         $pathTemplate = '/templates/products_add.php';
     // "О доставке"
     } else if (isCurrentUrl(PATH_ORDERS_DELIVERY)) {
-        // Логика страницы
-        require $_SERVER['DOCUMENT_ROOT'] . '/content/delivery.php';
         // Путь к шаблону страницы
         $pathTemplate = '/templates/delivery.php';
     // "Авторизация"

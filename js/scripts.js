@@ -164,32 +164,6 @@ if (shopList) {
 
         if (inputs.every(inp => !!inp.value)) {
 
-          // evt.preventDefault();
-          //
-          // toggleHidden(shopOrder, popupEnd);
-          //
-          // popupEnd.classList.add('fade');
-          // setTimeout(() => popupEnd.classList.remove('fade'), 1000);
-          //
-          // window.scroll(0, 0);
-          //
-          // const buttonEnd = popupEnd.querySelector('.button');
-          // // Обработка кнопки "Продолжить покупки"
-          // buttonEnd.addEventListener('click', () => {
-          //
-          //
-          //   popupEnd.classList.add('fade-reverse');
-          //
-          //   setTimeout(() => {
-          //
-          //     popupEnd.classList.remove('fade-reverse');
-          //
-          //     toggleHidden(popupEnd, document.querySelector('.intro'), document.querySelector('.shop'));
-          //
-          //   }, 1000);
-          //
-          // });
-
         } else {
           window.scroll(0, 0);
           evt.preventDefault();
@@ -301,18 +275,6 @@ if (addList) {
     reader.readAsDataURL(file);
 
   });
-
-  // const button = document.querySelector('.button');
-  // const popupEnd = document.querySelector('.page-add__popup-end');
-  //
-  // button.addEventListener('click', (evt) => {
-  //
-  //   evt.preventDefault();
-  //
-  //   form.hidden = true;
-  //   popupEnd.hidden = false;
-  //
-  // })
 
 }
 
